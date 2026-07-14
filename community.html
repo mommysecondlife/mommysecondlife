@@ -638,6 +638,15 @@
   .ch.kk:hover .ic{background:#FEE500;color:#3C1E1E}
   .ch.nv:hover .ic{background:#03C75A}
   .ch.cf:hover .ic{background:#2DB400}
+  @media (max-width:640px){
+    .desc br, .lead br, .who-card p br, .ch-desc br,
+    .frame .big br, .home-hero h1 br, .act p br,
+    .ch small br, .exp p br, .copy p br{
+      display:none;
+    }
+    .desc, .who-card p, .ch-desc, .act p{word-break:keep-all}
+    .home-hero h1, .frame .big{word-break:keep-all}
+  }
 </style>
 </head>
 <body>

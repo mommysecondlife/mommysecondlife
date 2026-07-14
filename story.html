@@ -652,6 +652,15 @@
   .story-end a{display:inline-flex;align-items:center;gap:10px;background:var(--pink);color:#fff;text-decoration:none;padding:17px 34px;border-radius:999px;font-size:16px;font-weight:800;box-shadow:0 14px 34px rgba(255,64,102,.35);transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
   .story-end a:hover{transform:translateY(-4px) scale(1.03)}
   @media (max-width:860px){.acts{grid-template-columns:1fr}}
+  @media (max-width:640px){
+    .desc br, .lead br, .who-card p br, .ch-desc br,
+    .frame .big br, .home-hero h1 br, .act p br,
+    .ch small br, .exp p br, .copy p br{
+      display:none;
+    }
+    .desc, .who-card p, .ch-desc, .act p{word-break:keep-all}
+    .home-hero h1, .frame .big{word-break:keep-all}
+  }
 </style>
 </head>
 <body>
