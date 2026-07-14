@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>감사일기 · 엄세라</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<style>
+  :root{
+    --pink:#F4607A;
+    --deep:#E23B5C;
+    --dark:#8F1F38;
+    --rose:#FFD3DC;
+    --bg:#FFF6F5;
+    --ink:#33101F;
+    --mut:#9A6E7C;
+    --line:#FFDFE4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;overflow-x:hidden}
+  ::selection{background:var(--pink);color:#fff}
+
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;justify-content:space-between;align-items:center;padding:16px 32px;
+  }
+  nav a{color:#fff;text-decoration:none;font-weight:700}
+  nav .back{display:inline-flex;align-items:center;gap:8px;font-size:15px;opacity:.9;transition:opacity .2s}
+  nav .back:hover{opacity:1}
+  nav .brand{font-size:20px;font-weight:800}
+
+  /* ---------- 히어로 ---------- */
+  .hero{
+    min-height:100svh;display:flex;align-items:center;
+    background:linear-gradient(155deg,#F76D85 0%,var(--pink) 45%,#EE4A69 100%);
+    color:#fff;position:relative;overflow:hidden;padding:110px 24px 70px;
+  }
+  .hero::before,.hero::after{
+    content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.07);
+  }
+  .hero::before{width:420px;height:420px;left:-140px;bottom:-160px}
+  .hero::after{width:220px;height:220px;left:120px;bottom:-60px;background:rgba(255,255,255,.05)}
+  .hero .wrap{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative;z-index:1}
+
+  .copy h1{
+    font-size:clamp(44px,7vw,76px);font-weight:800;letter-spacing:-.03em;line-height:1.15;
+    margin-bottom:16px;opacity:0;animation:fadeUp .7s .1s ease forwards;
+  }
+  .copy .tag{
+    font-size:clamp(18px,2.4vw,24px);font-weight:700;margin-bottom:14px;
+    opacity:0;animation:fadeUp .7s .25s ease forwards;
+  }
+  .copy .chips{
+    display:flex;gap:8px;flex-wrap:wrap;margin-bottom:38px;
+    opacity:0;animation:fadeUp .7s .4s ease forwards;
+  }
+  .chips span{
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
+    padding:6px 14px;border-radius:999px;font-size:14px;font-weight:600;
+  }
+  .stores{display:flex;gap:14px;flex-wrap:nowrap;align-items:center;opacity:0;animation:fadeUp .7s .55s ease forwards}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+  .store-btn{
+    display:inline-flex;align-items:center;gap:11px;
+    background:#fff;color:#1a1a1a;text-decoration:none;
+    padding:14px 22px;border-radius:999px;font-size:16px;font-weight:700;white-space:nowrap;
+    box-shadow:0 12px 30px rgba(122,10,44,.25);
+    transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s;
+  }
+  .store-btn:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 18px 40px rgba(122,10,44,.35)}
+  .store-btn svg{width:22px;height:22px}
+  .store-btn.soon{
+    background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.4);
+    box-shadow:none;cursor:default;position:relative;
+  }
+  .store-btn.soon:hover{transform:none;box-shadow:none}
+  .store-btn.soon .badge{
+    position:absolute;top:-11px;right:14px;
+    background:#fff;color:var(--deep);font-size:11px;font-weight:800;
+    padding:3px 10px;border-radius:999px;box-shadow:0 4px 10px rgba(122,10,44,.2);
+    animation:badgePulse 2s ease-in-out infinite;
+  }
+  @keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+  /* ---------- 폰 목업 ---------- */
+  .phone-wrap{display:flex;justify-content:center;perspective:1000px}
+  .phone{
+    width:min(300px,70vw);background:#fff;border-radius:40px;padding:14px;
+    box-shadow:0 40px 90px rgba(122,10,44,.4), 0 0 0 10px rgba(255,255,255,.12);
+    transform:rotate(3deg);
+    animation:phoneFloat 5s ease-in-out infinite;
+  }
+  @keyframes phoneFloat{0%,100%{transform:rotate(3deg) translateY(0)}50%{transform:rotate(2deg) translateY(-14px)}}
+  .screen{background:var(--bg);border-radius:28px;padding:22px 18px;color:var(--ink)}
+  .screen .notch{width:80px;height:6px;background:#EFD4DA;border-radius:99px;margin:0 auto 18px}
+  .screen h3{font-size:17px;font-weight:800;display:flex;justify-content:space-between;align-items:center}
+  .screen h3 small{font-size:11px;color:var(--mut);font-weight:600}
+  .streak{
+    margin:12px 0 16px;background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:10px 14px;font-size:13px;font-weight:700;display:flex;justify-content:space-between;
+  }
+  .streak b{color:var(--deep)}
+  .entry{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:12px 14px;font-size:13px;margin-bottom:9px;display:flex;gap:9px;align-items:flex-start;
+    opacity:0;transform:translateY(10px);animation:entryIn .5s ease forwards;
+  }
+  .entry:nth-child(4){animation-delay:.9s}
+  .entry:nth-child(5){animation-delay:1.5s}
+  .entry:nth-child(6){animation-delay:2.1s}
+  @keyframes entryIn{to{opacity:1;transform:translateY(0)}}
+  .entry .no{
+    flex:none;width:20px;height:20px;border-radius:50%;background:var(--rose);
+    color:var(--dark);font-size:11px;font-weight:800;display:grid;place-items:center;margin-top:1px;
+  }
+  .write-btn{
+    margin-top:14px;background:var(--pink);color:#fff;text-align:center;
+    border-radius:999px;padding:12px;font-size:14px;font-weight:800;
+    box-shadow:0 8px 18px rgba(244,96,122,.4);
+  }
+  .heart-float{position:absolute;font-size:20px;opacity:0;animation:heartUp 4s ease-in infinite}
+  @keyframes heartUp{
+    0%{opacity:0;transform:translateY(0) scale(.6)}
+    15%{opacity:.9}
+    100%{opacity:0;transform:translateY(-120px) scale(1.15) rotate(14deg)}
+  }
+
+  /* ---------- 기능 소개 ---------- */
+  .features{padding:90px 24px}
+  .features .wrap{max-width:1040px;margin:0 auto}
+  .features h2{font-size:clamp(24px,3.6vw,34px);font-weight:800;letter-spacing:-.02em;text-align:center;margin-bottom:10px}
+  .features .sub{text-align:center;color:var(--mut);margin-bottom:44px}
+  .fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .fcard{
+    background:#fff;border:1px solid var(--line);border-radius:24px;padding:30px;text-align:center;
+    opacity:0;transform:translateY(24px);transition:all .6s cubic-bezier(.22,1,.36,1);
+  }
+  .fcard.reveal{opacity:1;transform:translateY(0)}
+  .fcard .ic{font-size:36px;margin-bottom:14px}
+  .fcard b{display:block;font-size:18px;margin-bottom:8px}
+  .fcard p{font-size:14px;color:var(--mut)}
+
+  .bottom-cta{text-align:center;padding:0 24px 90px}
+  .bottom-cta a{
+    display:inline-flex;align-items:center;gap:10px;
+    background:var(--pink);color:#fff;text-decoration:none;
+    padding:17px 34px;border-radius:999px;font-size:17px;font-weight:800;
+    box-shadow:0 14px 34px rgba(244,96,122,.4);
+    transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+  }
+  .bottom-cta a:hover{transform:translateY(-4px) scale(1.03)}
+
+  footer{text-align:center;padding:50px 24px;color:var(--mut);font-size:14px;border-top:1px solid var(--line)}
+  footer a{color:var(--deep);font-weight:700;text-decoration:none}
+
+  @media (max-width:860px){
+    .hero .wrap{grid-template-columns:1fr;gap:44px;text-align:center}
+    .copy .chips,.stores{justify-content:center}
+    .stores{flex-wrap:wrap}
+    .fgrid{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    .copy h1,.copy .tag,.copy .chips,.stores,.entry{opacity:1!important;transform:none!important}
+    .fcard{opacity:1!important;transform:none!important}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="back" href="index.html">← 엄세라 홈</a>
+  <a class="brand" href="index.html">엄세라 🍀</a>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="copy">
+      <p class="tag">매일 3가지 감사로 삶이 바뀝니다</p>
+      <h1>감사일기</h1>
+      <div class="chips">
+        <span>✍️ 감사 습관</span><span>🔥 7일 챌린지</span><span>🖼 비전보드</span>
+      </div>
+      <div class="stores">
+        <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.gamsaapp.diary" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path fill="#00C4FF" d="M3.6 1.8 13.7 12 3.6 22.2c-.4-.3-.6-.8-.6-1.4V3.2c0-.6.2-1.1.6-1.4z"/><path fill="#FFCE00" d="m17.4 8.3-3.7 3.7-10.1-10.2c.4-.3 1-.3 1.6 0l12.2 6.5z"/><path fill="#FF3A44" d="M17.4 15.7 5.2 22.2c-.6.3-1.2.3-1.6 0L13.7 12l3.7 3.7z"/><path fill="#00E36B" d="m21.3 10.4-3.9-2.1-3.7 3.7 3.7 3.7 3.9-2.1c1-.6 1-2.6 0-3.2z"/></svg>
+          Google Play
+        </a>
+        <span class="store-btn soon">
+          <svg viewBox="0 0 24 24"><path fill="#fff" d="M17.05 12.54c-.03-2.63 2.15-3.89 2.25-3.95-1.23-1.79-3.13-2.04-3.8-2.07-1.62-.16-3.16.95-3.98.95-.82 0-2.09-.93-3.43-.9-1.77.03-3.4 1.03-4.3 2.6-1.84 3.18-.47 7.88 1.32 10.46.87 1.26 1.91 2.68 3.27 2.63 1.31-.05 1.81-.85 3.39-.85s2.03.85 3.42.82c1.41-.02 2.31-1.28 3.17-2.55.99-1.46 1.4-2.88 1.42-2.95-.03-.02-2.73-1.05-2.76-4.16zM14.44 4.8c.72-.87 1.2-2.08 1.07-3.3-1.03.04-2.29.69-3.03 1.56-.67.77-1.25 2-1.09 3.19 1.15.09 2.33-.58 3.05-1.45z"/></svg>
+          App Store
+          <span class="badge">7월 출시 예정</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="screen">
+          <div class="notch"></div>
+          <h3>오늘의 감사 🍀 <small>7월 7일 화요일</small></h3>
+          <div class="streak">연속 기록 <b>🔥 12일째</b></div>
+          <div class="entry"><span class="no">1</span>애들이 오늘따라 밥을 잘 먹었다</div>
+          <div class="entry"><span class="no">2</span>퇴근길 노을이 예뻤다</div>
+          <div class="entry"><span class="no">3</span>내가 만든 앱을 누가 다운받았다!</div>
+          <div class="write-btn">✏️ 오늘의 감사 쓰기</div>
+        </div>
+        <span class="heart-float" style="left:12%;top:38%">💗</span>
+        <span class="heart-float" style="left:76%;top:52%;animation-delay:1.4s">🩷</span>
+        <span class="heart-float" style="left:44%;top:30%;animation-delay:2.6s">💕</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="wrap">
+    <h2>하루 3줄이면 충분해요</h2>
+    <p class="sub">코드 한 줄 모르던 엄마가 22일 만에 직접 만든 앱이에요.</p>
+    <div class="fgrid" id="fgrid">
+      <div class="fcard"><div class="ic">✍️</div><b>감사 습관</b><p>매일 3가지, 부담 없는 기록. 연속 기록이 쌓이는 재미로 습관이 돼요.</p></div>
+      <div class="fcard"><div class="ic">🔥</div><b>7일 챌린지</b><p>일주일만 함께 써봐요. 감사가 습관이 되는 최소 단위예요.</p></div>
+      <div class="fcard"><div class="ic">🖼</div><b>비전보드</b><p>바라는 모습을 눈에 보이게. 감사와 목표를 한 앱에서 관리해요.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="bottom-cta">
+  <a href="https://play.google.com/store/apps/details?id=com.gamsaapp.diary" target="_blank" rel="noopener">지금 시작하기 🌼</a>
+</div>
+
+<footer>
+  <p><a href="index.html">엄세라 🍀</a> · 엄마의 세컨드 라이프</p>
+  <p style="margin-top:6px;opacity:.7">iOS 버전은 7월 중 출시 예정이에요.</p>
+</footer>
+
+<script>
+(function(){
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(!e.isIntersecting)return;
+      [...e.target.children].forEach((c,i)=>setTimeout(()=>c.classList.add('reveal'),i*140));
+      io.unobserve(e.target);
+    });
+  },{threshold:.2});
+  const g=document.getElementById('fgrid');
+  if(g)io.observe(g);
+})();
+</script>
+</body>
+</html>

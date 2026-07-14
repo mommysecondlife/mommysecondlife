@@ -1,0 +1,14 @@
+# 백업/임시 파일 (배포에서 제외)
+index-backup*.html
+*-backup*.html
+*.bak
+*~
+*.tmp
+
+# OS 생성 파일
+.DS_Store
+Thumbs.db
+
+# 에디터/도구
+.vscode/
+.idea/
