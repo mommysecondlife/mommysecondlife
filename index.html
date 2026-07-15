@@ -579,6 +579,15 @@
     background:var(--blush);padding:3px 10px;border-radius:999px;
   }
   .value-cards{margin-top:2.4svh}
+
+  a.vcard{display:block;text-decoration:none;color:inherit;cursor:pointer}
+  a.vcard:hover{transform:translateY(-6px);border-color:var(--pink);box-shadow:0 18px 40px rgba(255,64,102,.16)}
+  .vgo{
+    display:inline-flex;align-items:center;gap:5px;margin-top:14px;
+    font-size:12.5px;font-weight:800;color:var(--pink);
+  }
+  .vgo::after{content:"→";transition:transform .25s}
+  a.vcard:hover .vgo::after{transform:translateX(4px)}
   @media (max-width:640px){
     .desc br, .lead br, .who-card p br, .ch-desc br,
     .frame .big br, .home-hero h1 br, .act p br,
@@ -635,32 +644,29 @@
 
     <p class="mission-lead" data-reveal>엄마 이후의 삶이 사라진 것 같았다면,<br>여기서 다시 시작할 수 있어요.</p>
     <div class="value-cards" data-stagger>
-      <div class="vcard">
+      <a class="vcard" href="story.html">
         <span class="vstep">STEP 1</span>
         <span class="vic">💡</span>
         <b>잃어버린 나를 다시</b>
         <p>엄마 이후, 내 이름이 사라진 것 같았다면. 작은 시도부터 다시 나를 찾아요.</p>
-      </div>
-      <div class="vcard">
+        <span class="vgo">엄세라 이야기</span>
+      </a>
+      <a class="vcard" href="ailab.html">
         <span class="vstep">STEP 2</span>
         <span class="vic">🛠</span>
         <b>단계별 역량 강화</b>
         <p>코드 몰라도 괜찮아요. AI로 하나씩 만들다 보면 그게 내 실력이 돼요.</p>
-      </div>
-      <div class="vcard">
+        <span class="vgo">AI LAB 챌린지</span>
+      </a>
+      <a class="vcard" href="community.html">
         <span class="vstep">STEP 3</span>
         <span class="vic">🤝</span>
         <b>혼자가 아닌 함께</b>
         <p>같은 고민의 엄마들과 만나고, 서로의 증거가 되어줘요.</p>
-      </div>
+        <span class="vgo">해봤수다 커뮤니티</span>
+      </a>
     </div>
 
-    <p class="doors-label">또는 먼저 둘러보기</p>
-    <div class="doors">
-      <a class="door" href="ailab.html"><span class="ic">🤖</span><span>AI LAB<small>챌린지로 직접 만들어요</small></span></a>
-      <a class="door" href="community.html"><span class="ic">☕</span><span>Community<small>해봤수다 · 같이 해요</small></span></a>
-      <a class="door" href="gratitude.html"><span class="ic">📔</span><span>Gratitude Journal<small>감사일기 앱</small></span></a>
-    </div>
   </section>
 
   <!-- 엄세라가 누구? -->
