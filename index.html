@@ -160,9 +160,7 @@
     position:absolute;border-radius:14px;z-index:3;
     transition:box-shadow .25s,background .25s,transform .25s cubic-bezier(.34,1.56,.64,1);
   }
-  .spot:hover,.spot:focus-visible{box-shadow:0 0 0 3px var(--pink),0 14px 30px rgba(255,64,102,.25);background:rgba(255,255,255,.18);transform:translateY(-3px);outline:none}x);
-    outline:none;
-  }
+  .spot:hover,.spot:focus-visible{box-shadow:0 0 0 3px var(--pink),0 14px 30px rgba(255,64,102,.25);background:rgba(255,255,255,.18);transform:translateY(-3px);outline:none}
   .switch-zone .bulb .glow{animation:none;opacity:0;transition:opacity .3s ease}
   .switch-zone .bulb .rays{animation:none;opacity:0;transform:scale(.55);transition:opacity .3s .1s,transform .3s .1s cubic-bezier(.34,1.56,.64,1)}
   .switch-zone:hover .bulb .glow,.switch-zone.lit .bulb .glow{opacity:1}
@@ -527,6 +525,60 @@
   .ch.kk:hover .ic{background:#FEE500;color:#3C1E1E}
   .ch.nv:hover .ic{background:#03C75A}
   .ch.cf:hover .ic{background:#2DB400}
+
+  /* ===== 히어로 메인 CTA ===== */
+  .hero-cta{
+    display:inline-flex;flex-direction:column;align-items:center;gap:2px;
+    margin-top:3svh;padding:16px 40px;border-radius:999px;text-decoration:none;
+    background:var(--pink);color:#fff;
+    box-shadow:0 16px 38px rgba(255,64,102,.42);
+    opacity:0;animation:fadeUp .8s .55s ease forwards;
+    transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s;
+    position:relative;
+  }
+  .hero-cta::after{
+    content:"";position:absolute;inset:0;border-radius:999px;
+    box-shadow:0 0 0 0 rgba(255,64,102,.5);
+    animation:ctaPulse 2.2s ease-out infinite;
+  }
+  @keyframes ctaPulse{0%{box-shadow:0 0 0 0 rgba(255,64,102,.45)}70%,100%{box-shadow:0 0 0 18px rgba(255,64,102,0)}}
+  .hero-cta:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 22px 48px rgba(255,64,102,.55)}
+  .hero-cta .cta-main{font-size:19px;font-weight:800;letter-spacing:-.01em}
+  .hero-cta .cta-sub{font-size:13px;font-weight:600;color:#FFE0E7}
+
+  .value-cards{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+    margin-top:3.4svh;width:min(880px,94vw);
+  }
+  .vcard{
+    background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 20px;text-align:center;
+    opacity:0;transform:translateY(22px);transition:all .6s cubic-bezier(.22,1,.36,1);
+  }
+  .vcard.reveal{opacity:1;transform:translateY(0)}
+  .vic{font-size:28px;display:block;margin-bottom:10px}
+  .vcard b{display:block;font-size:16px;font-weight:800;margin-bottom:6px;letter-spacing:-.01em}
+  .vcard p{font-size:13px;color:var(--mut);line-height:1.6}
+
+  .doors-label{margin-top:3.4svh;font-size:13px;font-weight:600;color:var(--mut);opacity:0;animation:fadeUp .8s .7s ease forwards}
+  .doors{margin-top:12px}
+  @media (max-width:860px){
+    .value-cards{grid-template-columns:1fr;gap:10px}
+    .hero-cta{padding:15px 32px}
+  }
+
+  .mission-lead{
+    margin-top:5svh;text-align:center;font-size:clamp(17px,2.2vw,21px);font-weight:700;
+    line-height:1.6;color:var(--ink);
+    opacity:0;transform:translateY(16px);transition:all .7s ease;
+  }
+  .mission-lead.reveal{opacity:1;transform:translateY(0)}
+  .vcard{position:relative;padding-top:30px}
+  .vstep{
+    position:absolute;top:16px;left:50%;transform:translateX(-50%);
+    font-size:10.5px;font-weight:800;letter-spacing:.12em;color:var(--pink);
+    background:var(--blush);padding:3px 10px;border-radius:999px;
+  }
+  .value-cards{margin-top:2.4svh}
   @media (max-width:640px){
     .desc br, .lead br, .who-card p br, .ch-desc br,
     .frame .big br, .home-hero h1 br, .act p br,
@@ -575,6 +627,34 @@
       </div>
     </div>
 
+    <a class="hero-cta" href="story.html">
+      <span class="cta-main">나의 세컨드 라이프 시작하기 →</span>
+      <span class="cta-sub">코드 한 줄 없이, 나도 만들 수 있어요</span>
+    </a>
+
+    <p class="mission-lead" data-reveal>엄마 이후의 삶이 사라진 것 같았다면,<br>여기서 다시 시작할 수 있어요.</p>
+    <div class="value-cards" data-stagger>
+      <div class="vcard">
+        <span class="vstep">STEP 1</span>
+        <span class="vic">💡</span>
+        <b>잃어버린 나를 다시</b>
+        <p>엄마 이후, 내 이름이 사라진 것 같았다면. 작은 시도부터 다시 나를 찾아요.</p>
+      </div>
+      <div class="vcard">
+        <span class="vstep">STEP 2</span>
+        <span class="vic">🛠</span>
+        <b>단계별 역량 강화</b>
+        <p>코드 몰라도 괜찮아요. AI로 하나씩 만들다 보면 그게 내 실력이 돼요.</p>
+      </div>
+      <div class="vcard">
+        <span class="vstep">STEP 3</span>
+        <span class="vic">🤝</span>
+        <b>혼자가 아닌 함께</b>
+        <p>같은 고민의 엄마들과 만나고, 서로의 증거가 되어줘요.</p>
+      </div>
+    </div>
+
+    <p class="doors-label">또는 먼저 둘러보기</p>
     <div class="doors">
       <a class="door" href="ailab.html"><span class="ic">🤖</span><span>AI LAB<small>챌린지로 직접 만들어요</small></span></a>
       <a class="door" href="community.html"><span class="ic">☕</span><span>Community<small>해봤수다 · 같이 해요</small></span></a>
