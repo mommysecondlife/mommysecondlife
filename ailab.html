@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI LAB · 엄세라 챌린지</title>
+<title>AI LAB · 엄세라 전자책</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -767,6 +767,24 @@
     .desc, .who-card p, .ch-desc, .act p, .mission-lead,
     .home-hero h1, .frame .big{word-break:keep-all}
   }
+  /* ---------- 전자책 ---------- */
+  .books{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .book{
+    display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);
+    border-radius:22px;padding:28px 24px;text-decoration:none;color:inherit;
+    transition:transform .25s cubic-bezier(.34,1.56,.64,1),border-color .25s,box-shadow .25s;
+  }
+  .book:hover{transform:translateY(-6px);border-color:var(--pink);box-shadow:0 16px 34px rgba(255,64,102,.16)}
+  .book .btag{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--pink);background:var(--blush);padding:5px 12px;border-radius:999px;margin-bottom:16px}
+  .book .cover{font-size:34px;line-height:1;margin-bottom:12px}
+  .book b{display:block;font-size:18px;font-weight:800;letter-spacing:-.01em;margin-bottom:9px}
+  .book p{font-size:14px;color:var(--mut);line-height:1.7;flex:1;margin-bottom:20px}
+  .book .go{font-size:14.5px;font-weight:800;color:var(--pink)}
+  .book .go::after{content:"→";margin-left:5px;display:inline-block;transition:transform .25s}
+  .book:hover .go::after{transform:translateX(4px)}
+  .ebook-note{margin-top:28px;color:var(--mut);font-size:14px}
+  .ebook-note a{color:var(--pink);font-weight:700;text-decoration:none}
+  @media (max-width:860px){.books{grid-template-columns:1fr}}
 </style>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -792,72 +810,36 @@
     <p>코딩 몰라도 됩니다. 제가 먼저 걸어본 길이라, 어디서 넘어지는지 알거든요.</p>
   </section>
 
-  <!-- 챌린지 -->
-  <section id="challenge">
-    <div class="challenge">
-      <div class="wrap" style="padding:66px 40px 58px">
-        <div class="ch-head">
-          <div>
-            <span class="eyebrow">엄세라 AI LAB</span>
-            <h2>챌린지 목록</h2>
-            <p class="sub" style="margin-bottom:0">코딩 몰라도 됩니다. 제가 먼저 걸어본 길이라, 어디서 넘어지는지 알거든요.<br>기초부터 차근차근 — 하나씩 완주하면 실력이 쌓이는 커리큘럼이에요.</p>
-          </div>
-        </div>
-
-        <div class="now-tag">🔴 지금 신청 가능한 챌린지</div>
-        <ul class="ch-open" data-stagger>
-          <li class="ch-item live">
-            <div class="ch-body">
-              <div class="ch-info">
-                <div class="ch-lvl"><span class="step">STEP 1 · 기초 과정</span><span class="badge live">2기 모집중</span></div>
-                <h3>웹서비스 만들기</h3>
-                <p class="ch-desc">Claude 하나로 내 웹서비스를 만들어 배포까지. AI에게 말로 시켜서 만드는 바이브 코딩의 첫걸음이에요.</p>
-                <ul class="ch-meta">
-                  <li>📅 2기는 10일 코스 <small>(1기는 7일로 진행)</small></li>
-                  <li>📮 매일 미션 카드 하나 <small>하루 1시간이면 충분</small></li>
-                  <li>💬 오픈채팅 실시간 질문 + 다음날 12시까지 피드백</li>
-                  <li>🚀 마지막 날, 내 서비스 배포 <small>진짜 주소가 생겨요</small></li>
-                  <li>💻 준비물은 Claude 데스크톱 앱 하나</li>
-                  <li>💰 참가비 100,000원</li>
-                </ul>
-                <a class="btn btn-hot" href="https://litt.ly/mommysecondlife/sale/0HNfQcm" target="_blank" rel="noopener">2기 신청하기</a>
-              </div>
-              <div class="ch-media">
-                <button class="yt" data-yt="pcOd9pgDepg" aria-label="OT 영상 재생">
-                  <img src="https://i.ytimg.com/vi/pcOd9pgDepg/hqdefault.jpg" alt="웹서비스 챌린지 OT 영상" loading="lazy">
-                  <span class="play"><i></i></span>
-                  <span class="dur">▶ OT 영상 · 이렇게 진행돼요</span>
-                </button>
-                <p class="media-note">결제 전에 진행 방식을 먼저 확인하세요.</p>
-              </div>
-            </div>
-          </li>
-        </ul>
-
-        <div class="next-tag">다음 챌린지</div>
-        <ul class="ch-list" data-stagger>
-          <li class="ch-item soon">
-            <div class="ch-lvl"><span class="step">STEP 2 · 심화 과정</span><span class="badge soon">오픈 준비중</span></div>
-            <h3>앱 만들기</h3>
-            <p class="ch-desc">웹을 넘어 스토어에 올리는 진짜 앱으로. 제가 감사일기를 22일 만에 출시하며 겪은 걸 그대로 압축해서 나눌게요.</p>
-            <ul class="ch-meta">
-              <li>📱 구글 플레이 출시까지</li>
-              <li>✅ 웹서비스 챌린지 완주자 우선</li>
-            </ul>
-            <a class="btn btn-outline" href="https://open.kakao.com/o/ghfNIUch" target="_blank" rel="noopener">오픈 소식 받기</a>
-          </li>
-          <li class="ch-item soon">
-            <div class="ch-lvl"><span class="step">STEP 3 · 응용 과정</span><span class="badge soon">오픈 준비중</span></div>
-            <h3>AI 자동화</h3>
-            <p class="ch-desc">MCP로 AI를 채팅창 밖으로. 매일 아침 AI가 알아서 일하게 만드는 나만의 자동화 시스템을 세팅해요.</p>
-            <ul class="ch-meta">
-              <li>🤖 노션·카톡·지메일 연결</li>
-              <li>💡 아이디어 제안도 환영해요</li>
-            </ul>
-            <a class="btn btn-outline" href="https://open.kakao.com/o/ghfNIUch" target="_blank" rel="noopener">오픈 소식 받기</a>
-          </li>
-        </ul>
+  <!-- 전자책 -->
+  <section id="ebooks">
+    <div class="wrap">
+      <span class="eyebrow">엄세라 전자책</span>
+      <h2>먼저 해본 사람의 실전 자료</h2>
+      <p class="sub">10일 챌린지는 지금 준비 중이에요. 그전에, 제가 직접 만들며 정리한 자료로 먼저 시작해보세요.</p>
+      <div class="books">
+        <a class="book" href="https://open.kakao.com/o/ghfNIUch" target="_blank" rel="noopener">
+          <span class="btag">가이드</span>
+          <span class="cover">🔎</span>
+          <b>검색엔진 등록 가이드</b>
+          <p>내가 만든 사이트를 네이버·구글에 검색되게 등록하는 법. 따라만 하면 되는 단계별 가이드예요.</p>
+          <span class="go">신청하기</span>
+        </a>
+        <a class="book" href="https://open.kakao.com/o/ghfNIUch" target="_blank" rel="noopener">
+          <span class="btag">필수 용어</span>
+          <span class="cover">📘</span>
+          <b>AI 단어장 49</b>
+          <p>바이브 코딩에 꼭 필요한 AI 용어 49개. 낯선 말에 막히지 않게 딱 필요한 것만 담았어요.</p>
+          <span class="go">신청하기</span>
+        </a>
+        <a class="book" href="https://open.kakao.com/o/ghfNIUch" target="_blank" rel="noopener">
+          <span class="btag">출시 스토리</span>
+          <span class="cover">📕</span>
+          <b>바이브코딩 앱 출시 전자책</b>
+          <p>코딩 못 하는 워킹맘이 AI로 앱을 만들어 출시하기까지. 22일의 과정을 그대로 담았어요.</p>
+          <span class="go">신청하기</span>
+        </a>
       </div>
+      <p class="ebook-note">🔔 10일 챌린지 오픈 소식이 궁금하다면 <a href="https://open.kakao.com/o/ghfNIUch" target="_blank" rel="noopener">오픈채팅</a>에서 먼저 받아보세요.</p>
     </div>
   </section>
 
