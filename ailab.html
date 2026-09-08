@@ -782,8 +782,9 @@
   .book .go{font-size:14.5px;font-weight:800;color:var(--pink)}
   .book .go::after{content:"→";margin-left:5px;display:inline-block;transition:transform .25s}
   .book:hover .go::after{transform:translateX(4px)}
-  .ebook-note{margin-top:28px;color:var(--mut);font-size:14px}
-  .ebook-note a{color:var(--pink);font-weight:700;text-decoration:none}
+  .ebook-note{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--blush);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:0 0 26px;color:var(--ink);font-size:15px;font-weight:600;line-height:1.6}
+  .ebook-note b{color:var(--deep)}
+  .ebook-note a{color:var(--pink);font-weight:800;text-decoration:none}
   @media (max-width:860px){.books{grid-template-columns:1fr}}
   /* ---------- 모바일 햄버거 메뉴 ---------- */
   .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:40px;padding:8px;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;z-index:60}
@@ -836,6 +837,7 @@
       <span class="eyebrow">엄세라 전자책</span>
       <h2>먼저 해본 사람의 실전 자료</h2>
       <p class="sub">10일 챌린지는 지금 준비 중이에요. 그전에, 제가 직접 만들며 정리한 자료로 먼저 시작해보세요.</p>
+      <div class="ebook-note">🔔 <b>10일 챌린지</b>를 기다리신다면, <a href="https://open.kakao.com/o/ghfNIUch" target="_blank" rel="noopener">오픈채팅방</a>에서 오픈 소식을 가장 먼저 받아보세요.</div>
       <div class="books">
         <a class="book" href="https://open.kakao.com/o/ghfNIUch" target="_blank" rel="noopener">
           <span class="btag">가이드</span>
@@ -859,7 +861,6 @@
           <span class="go">신청하기</span>
         </a>
       </div>
-      <p class="ebook-note">🔔 10일 챌린지 오픈 소식이 궁금하다면 <a href="https://open.kakao.com/o/ghfNIUch" target="_blank" rel="noopener">오픈채팅</a>에서 먼저 받아보세요.</p>
     </div>
   </section>
 
