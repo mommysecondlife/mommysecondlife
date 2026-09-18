@@ -786,14 +786,6 @@
   .ebook-note{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--blush);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:0 0 26px;color:var(--ink);font-size:15px;font-weight:600;line-height:1.6}
   .ebook-note b{color:var(--deep)}
   .ebook-note a{color:var(--pink);font-weight:800;text-decoration:none}
-  .ebook-form-wrap{max-width:560px;margin:42px auto 0;background:#fff;border:1px solid var(--line);border-radius:22px;padding:34px 30px;box-shadow:0 16px 40px rgba(255,64,102,.08);scroll-margin-top:90px}
-  .ebook-form-head{text-align:center;margin-bottom:20px}
-  .ebook-form-head h3{font-size:21px;font-weight:800;letter-spacing:-.02em;margin:0 0 9px;word-break:keep-all}
-  .ebook-form-head p{font-size:14.5px;color:var(--mut);line-height:1.65;margin:0;word-break:keep-all}
-  #stb_subscribe{margin:0 auto}
-  #stb_subscribe .stb_form_title{display:none}
-  #stb_subscribe .stb_form_submit_button{border-radius:12px !important;font-weight:800}
-  @media (max-width:560px){.ebook-form-wrap{padding:26px 20px}}
   @media (max-width:860px){.books{grid-template-columns:1fr}}
   /* ---------- 모바일 햄버거 메뉴 ---------- */
   .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:40px;padding:8px;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;z-index:60}
@@ -848,82 +840,34 @@
       <p class="sub">10일 챌린지는 지금 준비 중이에요. 그전에, 제가 직접 만들며 정리한 자료로 먼저 시작해보세요.</p>
       <div class="ebook-note">🔔 <b>10일 챌린지</b>를 기다리신다면, <a href="https://open.kakao.com/o/ghfNIUch" target="_blank" rel="noopener">오픈채팅방</a>에서 오픈 소식을 가장 먼저 받아보세요.</div>
       <div class="books">
-        <a class="book" href="#ebook-form">
+        <a class="book" href="ebook-search-guide.pdf" download="엄세라 검색엔진 등록 가이드.pdf">
           <span class="btag">가이드</span>
           <span class="cover">🔎</span>
           <b>검색엔진 등록 가이드</b>
           <p>내가 만든 사이트를 네이버·구글에 검색되게 등록하는 법. 따라만 하면 되는 단계별 가이드예요.</p>
-          <span class="go">이메일 남기고 받기</span>
+          <span class="go">다운로드</span>
         </a>
-        <a class="book" href="#ebook-form">
+        <a class="book" href="ebook-ai-word49.pdf" download="엄세라 AI 단어장 49.pdf">
           <span class="btag">필수 용어</span>
           <span class="cover">📘</span>
           <b>AI 단어장 49</b>
           <p>바이브 코딩에 꼭 필요한 AI 용어 49개. 낯선 말에 막히지 않게 딱 필요한 것만 담았어요.</p>
-          <span class="go">이메일 남기고 받기</span>
+          <span class="go">다운로드</span>
         </a>
-        <a class="book" href="#ebook-form">
+        <a class="book" href="ebook-app-launch.pdf" download="엄세라 어플 출시 전자책 (윈도우·안드로이드).pdf">
           <span class="btag">출시 스토리</span>
           <span class="cover">📕</span>
           <b>바이브코딩 앱 출시 전자책 (안드로이드)</b>
           <p>코딩 못 하는 워킹맘이 AI로 앱을 만들어 출시하기까지. 22일의 과정을 그대로 담았어요.</p>
-          <span class="go">이메일 남기고 받기</span>
+          <span class="go">다운로드</span>
         </a>
-        <a class="book" href="#ebook-form">
+        <a class="book" href="ebook-instatoon.pdf" download="엄세라 인스타툰 전자책.pdf">
           <span class="btag">콘텐츠</span>
           <span class="cover">🎨</span>
           <b>인스타툰 전자책</b>
           <p>그림 한 장 못 그려도 괜찮아요. AI로 인스타툰을 만들어 콘텐츠로 소통하는 법.</p>
-          <span class="go">이메일 남기고 받기</span>
+          <span class="go">다운로드</span>
         </a>
-      </div>
-
-      <!-- 이메일 수집 폼 (스티비) -->
-      <div class="ebook-form-wrap" id="ebook-form">
-        <div class="ebook-form-head">
-          <h3>📩 이메일 남기고 전자책 4종 전부 받기</h3>
-          <p>이메일을 남겨주시면, 위 전자책 4종의 다운로드 링크를 메일로 보내드려요.</p>
-        </div>
-        <link rel="stylesheet" href="https://resource.stibee.com/subscribe/stb_subscribe_form_style.css">
-        <div id="stb_subscribe">
-          <form action="https://stibee.com/api/v1.0/lists/LhaIdEOr3z5NscqBLnrH4GEQX88S3A==/public/subscribers" method="POST" target="_blank" accept-charset="utf-8" class="stb_form" name="stb_subscribe_form" id="stb_subscribe_form" data-lang="" novalidate>
-            <h1 class="stb_form_title">엄세라 전자책 받기</h1>
-            <fieldset class="stb_form_set">
-              <label for="stb_email" class="stb_form_set_label">이메일 주소<span class="stb_asterisk">*</span></label>
-              <input type="text" class="stb_form_set_input" id="stb_email" name="email" required="required">
-              <div class="stb_form_msg_error" id="stb_email_error"></div>
-            </fieldset>
-            <fieldset class="stb_form_set">
-              <label for="stb_name" class="stb_form_set_label">이름</label>
-              <input type="text" class="stb_form_set_input" id="stb_name" name="name">
-              <div class="stb_form_msg_error" id="stb_name_error"></div>
-            </fieldset>
-            <div class="stb_form_policy">
-              <label>
-                <input type="checkbox" id="stb_policy" value="stb_policy_true">
-                <span>(필수)</span>
-                <button id="stb_form_modal_open" data-modal="stb_form_policy_modal" class="stb_form_modal_open_btn" type="button">개인정보 수집 및 이용</button>에 동의합니다.
-              </label>
-              <div class="stb_form_msg_error" id="stb_policy_error"></div>
-              <div class="stb_form_modal stb_form_policy_text blind" id="stb_form_policy_modal">
-                <div class="stb_form_modal_body">
-                  <h1 class="stb_form_modal_title">개인정보 수집 및 이용</h1>
-                  <div class="stb_form_modal_text">뉴스레터 발송을 위한 최소한의 개인정보를 수집하고 이용합니다.
-수집된 정보는 발송 외 다른 목적으로 이용되지 않으며, 서비스가 종료되거나 구독을 해지할 경우 즉시 파기됩니다.</div>
-                  <div class="stb_form_modal_btn">
-                    <button id="stb_form_modal_close" class="stb_form_modal_close_btn" data-modal="stb_form_policy_modal" type="button">닫기</button>
-                  </div>
-                </div>
-                <div class="stb_form_modal_bg" id="stb_form_modal_bg"></div>
-              </div>
-            </div>
-            <div class="stb_form_result" id="stb_form_result"></div>
-            <fieldset class="stb_form_set_submit">
-              <button type="submit" class="stb_form_submit_button" id="stb_form_submit_button" style="background-color:#FF4066;color:#ffffff;">구독하기</button>
-            </fieldset>
-          </form>
-        </div>
-        <script type="text/javascript" src="https://resource.stibee.com/subscribe/stb_subscribe_form.js"></script>
       </div>
     </div>
   </section>
