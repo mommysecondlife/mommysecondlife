@@ -744,7 +744,12 @@
     #lab-preview .lab-head h3{font-size:20px;font-weight:800}
     #lab-preview .lab-head a{color:var(--pink);font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap}
     #lab-preview .lab-head a:hover{color:var(--deep)}
-    #lab-preview .lab-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+    #lab-preview .lab-title{font-size:34px;font-weight:800;letter-spacing:-.5px;margin-bottom:26px}
+    #lab-preview .lab-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    #lab-preview .lab-cards.wide{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+    @media(max-width:820px){#lab-preview .lab-cards,#lab-preview .lab-cards.wide{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:540px){#lab-preview .lab-cards,#lab-preview .lab-cards.wide{grid-template-columns:1fr}}
+    @media(max-width:600px){#lab-preview .lab-title{font-size:27px}}
     #lab-preview .lcard{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;text-decoration:none;color:var(--ink);transition:transform .2s ease,box-shadow .2s ease}
     #lab-preview .lcard:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(255,64,102,.13)}
     #lab-preview .ltag{font-size:11px;font-weight:700;color:var(--pink);background:var(--blush);border-radius:999px;padding:3px 10px;align-self:flex-start;margin-bottom:10px}
@@ -756,11 +761,9 @@
   </style>
   <section id="lab-preview">
     <div class="wrap">
-      <span class="eyebrow">엄세라 AI LAB</span>
-      <h2>블로그 · 영상 · 전자책, 한곳에</h2>
-      <p class="sub">직접 해보며 남긴 기록이에요. 필요한 것부터 골라 보세요.</p>
+      <h2 class="lab-title">엄세라 AI LAB</h2>
 
-      <a class="challenge-banner" href="ailab.html">
+      <a class="challenge-banner" href="ailab.html" style="display:none">
         <span class="cb-badge">🆕 모집 예정</span>
         <b>🥋 엄마의 AI 도장깨기 30일</b>
         <p>하루에 하나씩, 30일이면 AI가 손에 익어요. 혼자 말고 같이 깨봐요.</p>
@@ -790,7 +793,7 @@
       <!-- 전자책 (실제 4권) -->
       <div class="lab-row">
         <div class="lab-head"><h3>📚 전자책</h3><a href="ailab.html">전체 보기 →</a></div>
-        <div class="lab-cards" data-stagger>
+        <div class="lab-cards wide" data-stagger>
           <a class="lcard" href="ebook-search-guide.pdf" download="엄세라 검색엔진 등록 가이드.pdf"><span class="ltag">가이드</span><span class="lcover">🔎</span><b>검색엔진 등록 가이드</b><p>내 사이트를 네이버·구글에 검색되게. 단계별로.</p><span class="lgo">다운로드 ↓</span></a>
           <a class="lcard" href="ebook-ai-word49.pdf" download="엄세라 AI 단어장 49.pdf"><span class="ltag">필수 용어</span><span class="lcover">📘</span><b>AI 단어장 49</b><p>바이브코딩에 꼭 필요한 용어 49개만.</p><span class="lgo">다운로드 ↓</span></a>
           <a class="lcard" href="ebook-app-launch.pdf" download="엄세라 어플 출시 전자책 (윈도우·안드로이드).pdf"><span class="ltag">출시 스토리</span><span class="lcover">📕</span><b>바이브코딩 앱 출시 전자책</b><p>워킹맘이 AI로 앱 출시까지, 22일의 과정.</p><span class="lgo">다운로드 ↓</span></a>
