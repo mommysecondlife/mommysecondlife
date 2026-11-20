@@ -757,6 +757,11 @@
     #lab-preview .lcard b{font-size:15px;line-height:1.42;margin-bottom:6px}
     #lab-preview .lcard p{font-size:13px;color:var(--mut);line-height:1.5}
     #lab-preview .lgo{margin-top:auto;padding-top:12px;font-size:13px;font-weight:800;color:var(--pink)}
+    #lab-preview .lab-head h3{display:flex;align-items:center;gap:8px}
+    #lab-preview .lab-head h3 svg{width:22px;height:22px;color:var(--pink);flex:none}
+    #lab-preview .thumb{display:block;width:100%;aspect-ratio:16/9;border-radius:12px;margin-bottom:12px;position:relative;overflow:hidden;background:linear-gradient(135deg,#FFD3DC,#FF86A6);background-size:cover;background-position:center}
+    #lab-preview .thumb svg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:40px;height:40px;color:rgba(255,255,255,.95)}
+    #lab-preview .lcard:hover .thumb{filter:brightness(1.04)}
     @media(max-width:600px){#lab-preview .challenge-banner b{font-size:21px}}
   </style>
   <section id="lab-preview">
@@ -770,29 +775,29 @@
         <span class="cb-go">자세히 보기 →</span>
       </a>
 
-      <!-- 유튜브 (샘플 카드 — 실제 영상 링크/제목으로 교체하세요) -->
+      <!-- 유튜브 (샘플 — 실제 영상 링크로 교체 시 thumb에 background-image:url(https://img.youtube.com/vi/영상ID/hqdefault.jpg) 추가) -->
       <div class="lab-row">
-        <div class="lab-head"><h3>📺 유튜브</h3><a href="https://www.youtube.com/@mommysecondlife" target="_blank" rel="noopener">채널 전체 보기 →</a></div>
+        <div class="lab-head"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>유튜브</h3><a href="https://www.youtube.com/@mommysecondlife" target="_blank" rel="noopener">채널 전체 보기 →</a></div>
         <div class="lab-cards" data-stagger>
-          <a class="lcard" href="https://www.youtube.com/@mommysecondlife" target="_blank" rel="noopener"><span class="ltag">영상</span><span class="lcover">▶️</span><b>코딩 모르는 워킹맘이 앱 만든 법</b><p>22일 만에 출시한 과정, 실패까지 다 보여드려요.</p><span class="lgo">보러 가기 →</span></a>
-          <a class="lcard" href="https://www.youtube.com/@mommysecondlife" target="_blank" rel="noopener"><span class="ltag">영상</span><span class="lcover">▶️</span><b>클로드로 1시간 만에 웹앱 뚝딱</b><p>말로 시켜서 만드는 바이브코딩, 따라 해봐요.</p><span class="lgo">보러 가기 →</span></a>
-          <a class="lcard" href="https://www.youtube.com/@mommysecondlife" target="_blank" rel="noopener"><span class="ltag">영상</span><span class="lcover">▶️</span><b>엄마도 할 수 있는 AI 자동화</b><p>틈새 시간에 하나씩, 반복 일을 AI에 맡겨요.</p><span class="lgo">보러 가기 →</span></a>
+          <a class="lcard" href="https://www.youtube.com/@mommysecondlife" target="_blank" rel="noopener"><span class="thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><b>코딩 모르는 워킹맘이 앱 만든 법</b><p>22일 만에 출시한 과정, 실패까지 다 보여드려요.</p></a>
+          <a class="lcard" href="https://www.youtube.com/@mommysecondlife" target="_blank" rel="noopener"><span class="thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><b>클로드로 1시간 만에 웹앱 뚝딱</b><p>말로 시켜서 만드는 바이브코딩, 따라 해봐요.</p></a>
+          <a class="lcard" href="https://www.youtube.com/@mommysecondlife" target="_blank" rel="noopener"><span class="thumb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><b>엄마도 할 수 있는 AI 자동화</b><p>틈새 시간에 하나씩, 반복 일을 AI에 맡겨요.</p></a>
         </div>
       </div>
 
-      <!-- 블로그 (샘플 카드 — 실제 글 링크/제목으로 교체하세요) -->
+      <!-- 블로그 (샘플 — 실제 글 링크로 교체. 썸네일은 thumb에 background-image:url(글 대표이미지) 추가) -->
       <div class="lab-row">
-        <div class="lab-head"><h3>📝 블로그</h3><a href="http://blog.naver.com/mommysecondlife" target="_blank" rel="noopener">블로그 전체 보기 →</a></div>
+        <div class="lab-head"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18h-5"/><path d="M18 14h-8"/><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="10" y="6" rx="1"/></svg>블로그</h3><a href="http://blog.naver.com/mommysecondlife" target="_blank" rel="noopener">블로그 전체 보기 →</a></div>
         <div class="lab-cards" data-stagger>
-          <a class="lcard" href="http://blog.naver.com/mommysecondlife" target="_blank" rel="noopener"><span class="ltag">부업</span><span class="lcover">📝</span><b>부업으로 시작한 AI, 이렇게 돈이 됐어요</b><p>워킹맘의 틈새 수익, 솔직한 숫자까지 공개.</p><span class="lgo">읽으러 가기 →</span></a>
-          <a class="lcard" href="http://blog.naver.com/mommysecondlife" target="_blank" rel="noopener"><span class="ltag">가이드</span><span class="lcover">📝</span><b>네이버 검색 등록, 따라만 하세요</b><p>내가 만든 사이트를 검색되게 만드는 법.</p><span class="lgo">읽으러 가기 →</span></a>
-          <a class="lcard" href="http://blog.naver.com/mommysecondlife" target="_blank" rel="noopener"><span class="ltag">회고</span><span class="lcover">📝</span><b>22일 앱 출시기 — 포기할 뻔한 순간들</b><p>중간에 막혔던 지점과 그걸 넘은 방법.</p><span class="lgo">읽으러 가기 →</span></a>
+          <a class="lcard" href="http://blog.naver.com/mommysecondlife" target="_blank" rel="noopener"><span class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18h-5"/><path d="M18 14h-8"/><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="10" y="6" rx="1"/></svg></span><b>부업으로 시작한 AI, 이렇게 돈이 됐어요</b><p>워킹맘의 틈새 수익, 솔직한 숫자까지 공개.</p></a>
+          <a class="lcard" href="http://blog.naver.com/mommysecondlife" target="_blank" rel="noopener"><span class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18h-5"/><path d="M18 14h-8"/><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="10" y="6" rx="1"/></svg></span><b>네이버 검색 등록, 따라만 하세요</b><p>내가 만든 사이트를 검색되게 만드는 법.</p></a>
+          <a class="lcard" href="http://blog.naver.com/mommysecondlife" target="_blank" rel="noopener"><span class="thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18h-5"/><path d="M18 14h-8"/><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="10" y="6" rx="1"/></svg></span><b>22일 앱 출시기 — 포기할 뻔한 순간들</b><p>중간에 막혔던 지점과 그걸 넘은 방법.</p></a>
         </div>
       </div>
 
       <!-- 전자책 (실제 4권) -->
       <div class="lab-row">
-        <div class="lab-head"><h3>📚 전자책</h3><a href="ailab.html">전체 보기 →</a></div>
+        <div class="lab-head"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>전자책</h3><a href="ailab.html">전체 보기 →</a></div>
         <div class="lab-cards wide" data-stagger>
           <a class="lcard" href="ebook-search-guide.pdf" download="엄세라 검색엔진 등록 가이드.pdf"><span class="ltag">가이드</span><span class="lcover">🔎</span><b>검색엔진 등록 가이드</b><p>내 사이트를 네이버·구글에 검색되게. 단계별로.</p><span class="lgo">다운로드 ↓</span></a>
           <a class="lcard" href="ebook-ai-word49.pdf" download="엄세라 AI 단어장 49.pdf"><span class="ltag">필수 용어</span><span class="lcover">📘</span><b>AI 단어장 49</b><p>바이브코딩에 꼭 필요한 용어 49개만.</p><span class="lgo">다운로드 ↓</span></a>
