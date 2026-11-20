@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>엄세라 · 엄마의 두 번째 인생</title>
+<meta name="description" content="평범한 워킹맘이 AI로 하나씩 만들어가는 두 번째 인생. 직접 해보고 도움 된 것만 나눠요.">
+<style>
+  :root{
+    --bg:#FFF6F5;
+    --pink:#FF4066;
+    --pink-dark:#E52E57;
+    --ink:#33101F;
+    --line:#FFDFE4;
+    --mut:#9A6E7C;
+    --blush:rgba(255,64,102,.08);
+    --card:#ffffff;
+    --shadow:0 10px 30px rgba(255,64,102,.08);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Pretendard","Apple SD Gothic Neo",system-ui,-apple-system,"Segoe UI",Roboto,"Malgun Gothic",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.6;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+  /* ===== NAV ===== */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,246,245,.85);
+    backdrop-filter:saturate(1.3) blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:19px;letter-spacing:-.02em}
+  .brand img{width:30px;height:30px;border-radius:50%;object-fit:cover}
+  .nav-side{display:flex;align-items:center;gap:22px;font-size:15px;font-weight:600}
+  .nav-side a{color:var(--mut);transition:color .15s}
+  .nav-side a:hover{color:var(--pink)}
+  .nav-cta{
+    padding:8px 15px;border-radius:999px;background:var(--pink);color:#fff !important;
+    font-weight:700;font-size:14px;
+  }
+  .nav-side .hide-m{display:inline}
+  @media(max-width:680px){
+    .nav-side{gap:12px;font-size:14px}
+    .nav-side .hide-m{display:none}
+  }
+
+  /* ===== HERO ===== */
+  .hero{padding:58px 0 46px}
+  .hero-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:40px;align-items:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--blush);color:var(--pink-dark);
+    font-weight:800;font-size:13px;letter-spacing:.04em;
+    padding:7px 13px;border-radius:999px;margin-bottom:20px;
+  }
+  .switch{
+    width:30px;height:17px;border-radius:999px;background:var(--pink);
+    position:relative;display:inline-block;
+  }
+  .switch::after{
+    content:"";position:absolute;top:2px;right:2px;width:13px;height:13px;
+    border-radius:50%;background:#fff;
+  }
+  h1.title{
+    font-size:clamp(30px,5.2vw,46px);line-height:1.25;letter-spacing:-.03em;
+    font-weight:800;margin:0 0 18px;
+  }
+  h1.title b{color:var(--pink)}
+  .lead{font-size:clamp(15px,2.3vw,17px);color:var(--mut);margin:0 0 30px;max-width:30ch}
+  .cta-row{display:flex;flex-wrap:wrap;gap:11px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:14px 22px;border-radius:14px;font-weight:700;font-size:15.5px;
+    border:1.5px solid transparent;transition:transform .12s, box-shadow .15s, background .15s;
+    cursor:pointer;
+  }
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:var(--pink);color:#fff;box-shadow:var(--shadow)}
+  .btn-primary:hover{background:var(--pink-dark)}
+  .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--pink);color:var(--pink)}
+
+  /* profile side */
+  .hero-card{
+    background:var(--card);border:1px solid var(--line);border-radius:26px;
+    padding:30px 26px;text-align:center;box-shadow:var(--shadow);
+  }
+  .avatar{
+    width:118px;height:118px;border-radius:50%;object-fit:cover;margin:0 auto 16px;
+    border:4px solid #fff;box-shadow:0 8px 22px rgba(255,64,102,.18);display:block;
+  }
+  .hero-card .name{font-weight:800;font-size:19px;margin-bottom:4px}
+  .hero-card .role{color:var(--mut);font-size:14px;margin-bottom:18px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+  .chip{
+    font-size:12.5px;font-weight:700;color:var(--pink-dark);
+    background:var(--blush);padding:6px 11px;border-radius:999px;
+  }
+
+  @media(max-width:760px){
+    .hero{padding:36px 0 30px}
+    .hero-grid{grid-template-columns:1fr;gap:26px}
+    .hero-text{order:2}
+    .hero-side{order:1}
+    .lead{max-width:none}
+    .hero-card{padding:26px 22px}
+    .cta-row .btn{flex:1 1 auto}
+  }
+
+  /* ===== SECTION / BLOG CARDS ===== */
+  .section{padding:44px 0;border-top:1px solid var(--line)}
+  .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px}
+  .sec-head h2{font-size:clamp(21px,3.6vw,28px);font-weight:800;letter-spacing:-.025em;margin:0}
+  .sec-head .more{color:var(--mut);font-weight:700;font-size:14.5px;white-space:nowrap}
+  .sec-head .more:hover{color:var(--pink)}
+  .sec-sub{color:var(--mut);font-size:14.5px;margin:0 0 24px}
+  .sec-eyebrow{display:inline-block;background:var(--blush);color:var(--pink-dark);
+    font-weight:800;font-size:12.5px;letter-spacing:.03em;padding:5px 11px;border-radius:999px;margin-bottom:14px}
+  .post-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .post-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    display:flex;flex-direction:column;transition:transform .14s, box-shadow .15s}
+  .post-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .pc-thumb{width:100%;height:150px;object-fit:cover;background:var(--blush);display:block}
+  .pc-noimg{display:flex;align-items:center;justify-content:center;color:var(--pink);font-weight:800;font-size:15px}
+  .pc-body{padding:15px 16px 18px;display:flex;flex-direction:column;gap:7px}
+  .pc-date{font-size:12.5px;color:var(--pink-dark);font-weight:700}
+  .pc-title{font-size:15.5px;font-weight:700;line-height:1.42;letter-spacing:-.01em;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .pc-sum{font-size:13px;color:var(--mut);line-height:1.55;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  @media(max-width:860px){.post-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){
+    .section{padding:34px 0}
+    .sec-head{flex-direction:column;align-items:flex-start;gap:6px}
+    .post-grid{grid-template-columns:1fr}
+    .pc-thumb{height:180px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href="#">
+      <img src="eomsera_logo_round.png" alt="엄세라 로고">엄세라
+    </a>
+    <div class="nav-side">
+      <a class="hide-m" href="story.html">이야기</a>
+      <a class="hide-m" href="gratitude.html">감사일기</a>
+      <a class="nav-cta" href="https://www.instagram.com/mommysecondlife/" target="_blank" rel="noopener">인스타 팔로우</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <span class="eyebrow"><span class="switch"></span>SWITCH ON · 엄마의 두 번째 인생</span>
+      <h1 class="title">AI로 시간을 벌어,<br><b>엄마의 두 번째 인생</b>을<br>시작합니다</h1>
+      <p class="lead">평범한 워킹맘이 AI로 하나씩 만들어가는 중이에요. 전문가 말고, 직접 다 해보고 진짜 도움 된 것만 나눠요.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="ebook-ai-word49.pdf" target="_blank" rel="noopener">무료 전자책 받기</a>
+        <a class="btn btn-ghost" href="story.html">엄세라 이야기 →</a>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="hero-card">
+        <img class="avatar" src="eomsera_logo_round.png" alt="엄세라">
+        <div class="name">엄세라</div>
+        <div class="role">엄마의 세컨드 라이프 · AI 실전 기록</div>
+        <div class="chips">
+          <span class="chip">인스타툰</span>
+          <span class="chip">AI 실전</span>
+          <span class="chip">부업 일기</span>
+          <span class="chip">워킹맘</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap">
+    <span class="sec-eyebrow">블로그 · AI와 10억 모으기</span>
+    <div class="sec-head">
+      <h2>AI로 10억 모으기, 해보는 중</h2>
+      <a class="more" href="https://blog.naver.com/mommysecondlife" target="_blank" rel="noopener">블로그 전체 보기 →</a>
+    </div>
+    <p class="sec-sub">진짜 써보고, 번 것·깨달은 것만 블로그에 적어요.</p>
+    <div class="post-grid">
+        <a class="post-card" href="https://blog.naver.com/mommysecondlife/224480978855" target="_blank" rel="noopener">
+          <img class="pc-thumb" src="https://blogthumb.pstatic.net/MjAyNjExMTdfMTc5/MDAxNzk0OTEzODI5NDc3.Rql5kRLezq0-zoDdnnnjUWvqRsCPHxdTM9SoNQIAFbMg.VWNQ0aapSlT6SHamZhDUFw1E1GZZhlPskel4cEStlgUg.JPEG/%BE%F6%BC%BC%B6%F3_%BA%ED%B7%CE%B1%D7_%BD%E6%B3%D7%C0%CF.jpg?type=s3" alt="" loading="lazy">
+          <div class="pc-body">
+            <div class="pc-date">2026.11.17</div>
+            <div class="pc-title">얼굴 공개 없이 릴스 만들기…클로드 힉스필드 직접 써보니</div>
+            <div class="pc-sum">(우선 클로드로 릴스 만들기 결과부터) 이것저것 부업 다 말아먹고 AI를 만나게 돼서 시작해봤던 인스타툰.. 그림을 못 그리는 저도 AI와 함께 할 수 있다고 생…</div>
+          </div>
+        </a>
+        <a class="post-card" href="https://blog.naver.com/mommysecondlife/224472995499" target="_blank" rel="noopener">
+          <img class="pc-thumb" src="https://blogthumb.pstatic.net/MjAyNjExMTFfNzYg/MDAxNzk0Mzc2MTYzMTEy.1wJ8BQ_r7ELv768lHmxdDR5p0QC56F3r-VYCERZifrMg.mjeWNX_tIHuzKh1FSAkyDyGaf3WgELgojKna_XcZtuYg.JPEG/%BE%F6%BC%BC%B6%F3_%BA%ED%B7%CE%B1%D7_%BD%E6%B3%D7%C0%CF_%282%29.jpg?type=s3" alt="" loading="lazy">
+          <div class="pc-body">
+            <div class="pc-date">2026.11.11</div>
+            <div class="pc-title">피클AI 글 하나로 2,436회, 애드포스트는 얼마 나올까</div>
+            <div class="pc-sum">요즘 핫한 피클AI.. 사실 전 꽤 잘 써먹고 있지만 주변에 알리진 않았어요.. 왜냐하면 ㅋㅋㅋㅋ 제가 쓴 '피클 AI 초대받았다'는 블로그 포스팅 하나가 하루 …</div>
+          </div>
+        </a>
+        <a class="post-card" href="https://blog.naver.com/mommysecondlife/224464611998" target="_blank" rel="noopener">
+          <img class="pc-thumb" src="https://blogthumb.pstatic.net/MjAyNjExMDRfMTgy/MDAxNzkzNzY1NjMyNTI3.2FIdo1R_GKpzOdLJKKW8nrX_ldLkXYgXz-wc5MnHXMog.N0lKUMFeiETfHQ0sFMUKkiJT2Nv3BWthvCzQvelAFCIg.JPEG/%BE%F6%BC%BC%B6%F3_%BA%ED%B7%CE%B1%D7_%BD%E6%B3%D7%C0%CF.jpg?type=s3" alt="" loading="lazy">
+          <div class="pc-body">
+            <div class="pc-date">2026.11.04</div>
+            <div class="pc-title">피클AI, 육퇴 후에 뭘 맡길까?</div>
+            <div class="pc-sum">피클AI가 대신 일을 해준다는데, 그래서 뭘 시키면 좋을까요? 저는 육퇴하고 누운 채로 쇼핑 리뷰와 아이 준비물 알림, 아침 브리핑을 부탁해봤어요. 제 비서 이름…</div>
+          </div>
+        </a>
+        <a class="post-card" href="https://blog.naver.com/mommysecondlife/224460539964" target="_blank" rel="noopener">
+          <img class="pc-thumb" src="https://blogthumb.pstatic.net/MjAyNjEwMzFfODkg/MDAxNzkzNDU0NzEyNDU3.AbUT_fEilheEeY0AqQUZude-VY0AgmGur1DpbXcL78gg.STqCQJacsZ-DLaI-wbbVvNgn4ISLTSWzfkiQZ_QY2ycg.JPEG/%BE%F6%BC%BC%B6%F3_%BA%ED%B7%CE%B1%D7_%BD%E6%B3%D7%C0%CF_%2815%29.jpg?type=s3" alt="" loading="lazy">
+          <div class="pc-body">
+            <div class="pc-date">2026.11.01</div>
+            <div class="pc-title">피클 AI 초대받았어요…대신 전화하고 체험단 신청까지 해주는 비서?</div>
+            <div class="pc-sum">최근 몇 달 사이에 어사이드 ai가 유용하다고 해서 열심히 활용하고 있었는데 또…</div>
+          </div>
+        </a>
+        <a class="post-card" href="https://blog.naver.com/mommysecondlife/224453229051" target="_blank" rel="noopener">
+          <img class="pc-thumb" src="https://blogthumb.pstatic.net/MjAyNjEwMjVfMjcx/MDAxNzkyOTI5NjI0MjQw.sYxjU5ouiukz09r4p-iCldBC4tfvRhDIPpANVwLVa84g.JINWaeEbDfUOLoskYl4gldinbjttMQPyHtdgfPr92hQg.JPEG/900_1792929619295.jpg?type=s3" alt="" loading="lazy">
+          <div class="pc-body">
+            <div class="pc-date">2026.10.25</div>
+            <div class="pc-title">어사이드 AI 토큰 줄이는 5가지 방법, 이렇게 바꿔봤습니다</div>
+            <div class="pc-sum">요즘 어사이드 AI한테 일을 정말 많이 맡겼어요 인스타, 네이버 블로그, 티스토리, 유튜브까지 채널마다 담당을 하나씩 두고 동시에 돌리고 있었거든요 ㅋㅋ 그러다…</div>
+          </div>
+        </a>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
