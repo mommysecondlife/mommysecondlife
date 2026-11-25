@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>관리자 · 해봤수다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<style>
+  :root{--bg:#FBF3F5;--ink:#3A1F2B;--pink:#E8335F;--pink-d:#C81E4A;--line:#EADDE2;--mut:#8A6B74;--card:#fff;--blush:#FDE8EE;--shadow:0 6px 20px rgba(58,31,43,.07)}
+  *{box-sizing:border-box;min-width:0}html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);line-height:1.55;word-break:keep-all;font-family:'Pretendard Variable',Pretendard,-apple-system,"Apple SD Gothic Neo",sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .top{position:sticky;top:0;z-index:30;background:rgba(251,243,245,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .top-in{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:12px;height:56px;padding:0 18px}
+  .brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px}
+  .brand img{width:28px;height:28px;border-radius:50%;object-fit:cover}
+  .adm{background:var(--ink);color:#fff;font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px}
+  .top .sp{margin-left:auto}
+  .top a.back{color:var(--mut);font-weight:700;font-size:14px}
+  .wrap{max-width:960px;margin:0 auto;padding:18px}
+  h1{font-size:22px;margin:4px 0 16px}
+  .tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:18px;border-bottom:1px solid var(--line);padding-bottom:0}
+  .tab{flex:0 0 auto;border:0;background:none;color:var(--mut);font-family:inherit;font-weight:800;font-size:15px;padding:10px 14px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+  .tab.on{color:var(--pink);border-bottom-color:var(--pink)}
+  .panel{display:none}.panel.on{display:block}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+  .btn{border:0;cursor:pointer;font-family:inherit;font-weight:700;border-radius:11px;padding:10px 15px;font-size:14px}
+  .btn-pink{background:var(--pink);color:#fff}.btn-pink:hover{background:var(--pink-d)}
+  .btn-ghost{background:#fff;border:1px solid var(--line);color:var(--mut)}
+  .btn-ok{background:#1C8A4E;color:#fff}
+  .btn-sm{padding:7px 11px;font-size:13px;border-radius:9px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:620px){.row2{grid-template-columns:1fr}}
+  label.fld{display:block;font-weight:700;font-size:13px;margin:12px 0 5px}
+  .inp{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:14px;background:#fff;color:var(--ink)}
+  .inp:focus{outline:none;border-color:var(--pink)}
+  .chk{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;margin-top:14px;cursor:pointer}
+  .list-row{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .list-row:last-child{border-bottom:0}
+  .pill{font-size:12px;font-weight:800;padding:4px 9px;border-radius:999px}
+  .p-wait{background:#FFF3D6;color:#A9770B}.p-ok{background:#D8F3E3;color:#1C8A4E}
+  .p-pend{background:#FFF3D6;color:#A9770B}.p-appr{background:#D8F3E3;color:#1C8A4E}.p-hide{background:#eee;color:#888}
+  .muted{color:var(--mut);font-size:13px}
+  .empty{color:var(--mut);text-align:center;padding:30px}
+  .q-body{font-size:13.5px;color:var(--mut);margin:4px 0 8px;white-space:pre-wrap}
+  .reg{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}
+  .reg .nm{font-weight:800}
+  .reg .kv{font-size:13px;margin-top:5px}.reg .kv b{color:var(--mut);font-weight:700}
+  .gate{text-align:center;padding:80px 20px;color:var(--mut)}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);z-index:60;background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;font-weight:700;opacity:0;pointer-events:none;transition:all .25s}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  select.inp{appearance:auto}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <span class="brand"><img src="eomsera_logo_round.png" alt="">엄세라</span><span class="adm">관리자</span>
+  <span class="sp"></span>
+  <a class="back" href="community.html">← 질문방</a>
+</div></header>
+
+<div class="wrap" id="app"><div class="gate">불러오는 중…</div></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="sudda.js?v=4"></script>
+<script src="umsera-auth.js?v=1"></script>
+<script>
+const $=s=>document.querySelector(s);
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2000);}
+function won(n){return n==null?'':Number(n).toLocaleString('ko-KR')+'원';}
+function whenK(s){if(!s)return'';const d=new Date(s),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;}
+function toLocalInput(s){if(!s)return'';const d=new Date(s),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;}
+function fromLocalInput(v){return v?new Date(v).toISOString():null;}
+const INTENT_LABEL={yes:'예, 해보고 싶어요',not_yet:'아직은요',unsure:'모르겠어요'};
+
+async function boot(){
+  await UAUTH.ready;
+  if(!UAUTH.user){ $('#app').innerHTML='<div class="gate">로그인이 필요해요.<br><br><button class="btn btn-pink" onclick="hbsdLoginKakao()">카카오 로그인</button></div>'; return; }
+  if(!UAUTH.isAdmin){ $('#app').innerHTML='<div class="gate">🔒 관리자만 들어올 수 있어요.<br><br><a class="btn btn-ghost" href="community.html">질문방으로</a></div>'; return; }
+  $('#app').innerHTML=`
+    <h1>관리자</h1>
+    <div class="tabs">
+      <button class="tab on" data-t="live">📅 라이브</button>
+      <button class="tab" data-t="regs">📋 신청자</button>
+      <button class="tab" data-t="q">✅ 질문</button>
+      <button class="tab" data-t="badge">👑 배지</button>
+    </div>
+    <div class="panel on" id="p-live"></div>
+    <div class="panel" id="p-regs"></div>
+    <div class="panel" id="p-q"></div>
+    <div class="panel" id="p-badge"></div>`;
+  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+    $('#p-'+b.dataset.t).classList.add('on');
+    if(b.dataset.t==='regs')loadRegs(); if(b.dataset.t==='q')loadQ(); if(b.dataset.t==='badge')loadBadge();
+  });
+  loadLives();
+}
+
+/* ===== 라이브 ===== */
+async function loadLives(){
+  const { data:lives } = await sb.from('hbsd_lives').select('*').order('live_at',{ascending:false});
+  const items=(lives||[]).map(l=>`<div class="list-row">
+    <div style="flex:1"><b>${hbsdEsc(l.title||'(제목 없음)')}</b> ${l.is_published?'<span class="pill p-ok">공개</span>':'<span class="pill p-wait">비공개</span>'}
+      <div class="muted">${whenK(l.live_at)||'일시 미정'} · ${l.price!=null?won(l.price):'가격 미정'}</div></div>
+    <button class="btn btn-ghost btn-sm" onclick="editLive('${l.id}')">편집</button></div>`).join('');
+  $('#p-live').innerHTML=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <b>라이브 목록</b><button class="btn btn-pink btn-sm" onclick="editLive('')">+ 새 라이브</button></div>
+    ${items||'<div class="empty">아직 라이브가 없어요.</div>'}</div>
+    <div id="liveForm"></div>`;
+  window._lives=Object.fromEntries((lives||[]).map(l=>[l.id,l]));
+}
+function editLive(id){
+  const l=id?window._lives[id]:{};
+  $('#liveForm').innerHTML=`<div class="card">
+    <b>${id?'라이브 편집':'새 라이브'}</b>
+    <label class="fld">제목</label><input class="inp" id="l_title" value="${hbsdEsc(l.title||'')}">
+    <div class="row2">
+      <div><label class="fld">발표자</label><input class="inp" id="l_speaker" value="${hbsdEsc(l.speaker||'')}"></div>
+      <div><label class="fld">시간(분)</label><input class="inp" id="l_dur" type="number" value="${l.duration_min||90}"></div>
+    </div>
+    <div class="row2">
+      <div><label class="fld">라이브 일시</label><input class="inp" id="l_at" type="datetime-local" value="${toLocalInput(l.live_at)}"></div>
+      <div><label class="fld">입금 마감</label><input class="inp" id="l_dl" type="datetime-local" value="${toLocalInput(l.deposit_deadline)}"></div>
+    </div>
+    <div class="row2">
+      <div><label class="fld">참가비(원)</label><input class="inp" id="l_price" type="number" value="${l.price!=null?l.price:''}"></div>
+      <div><label class="fld">입금 계좌</label><input class="inp" id="l_bank" value="${hbsdEsc(l.bank_account||'')}" placeholder="은행 000-0000 예금주"></div>
+    </div>
+    <label class="fld">🔒 줌 링크 <span class="muted">(참여 확정자에게 전날부터만 보여요)</span></label>
+    <input class="inp" id="l_zoom" value="${hbsdEsc(l.zoom_url||'')}" placeholder="https://zoom.us/j/...">
+    <label class="chk"><input type="checkbox" id="l_pub" ${l.is_published?'checked':''}> 공개하기 (체크하면 라이브 페이지에 떠요)</label>
+    <div style="margin-top:16px;display:flex;gap:8px">
+      <button class="btn btn-pink" onclick="saveLive('${id}')">저장</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('liveForm').innerHTML=''">닫기</button>
+    </div></div>`;
+  $('#liveForm').scrollIntoView({behavior:'smooth',block:'center'});
+}
+async function saveLive(id){
+  const rec={title:$('#l_title').value.trim(),speaker:$('#l_speaker').value.trim()||null,
+    duration_min:parseInt($('#l_dur').value)||null,live_at:fromLocalInput($('#l_at').value),
+    deposit_deadline:fromLocalInput($('#l_dl').value),price:$('#l_price').value?parseInt($('#l_price').value):null,
+    bank_account:$('#l_bank').value.trim()||null,zoom_url:$('#l_zoom').value.trim()||null,is_published:$('#l_pub').checked};
+  if(!rec.title){toast('제목을 적어주세요');return;}
+  let error;
+  if(id){ ({error}=await sb.from('hbsd_lives').update(rec).eq('id',id)); }
+  else { ({error}=await sb.from('hbsd_lives').insert(rec)); }
+  if(error){toast('오류: '+error.message);return;}
+  toast('저장했어요 ✨'); $('#liveForm').innerHTML=''; loadLives();
+}
+
+/* ===== 신청자 ===== */
+async function loadRegs(){
+  const { data:lives } = await sb.from('hbsd_lives').select('id,title,live_at').order('live_at',{ascending:false});
+  const opts=(lives||[]).map(l=>`<option value="${l.id}">${hbsdEsc(l.title||'(제목)')} · ${whenK(l.live_at)||''}</option>`).join('');
+  $('#p-regs').innerHTML=`<div class="card">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <select class="inp" id="regLive" style="flex:1;min-width:200px">${opts||'<option>라이브 없음</option>'}</select>
+      <button class="btn btn-ghost btn-sm" id="csvBtn">⬇ CSV 다운로드</button>
+    </div></div>
+    <div id="regList"></div>`;
+  $('#regLive').onchange=showRegs; $('#csvBtn').onclick=downloadCsv;
+  if(lives&&lives.length) showRegs();
+}
+let REGS=[];
+async function showRegs(){
+  const liveId=$('#regLive').value; if(!liveId)return;
+  const { data } = await sb.from('hbsd_registrations').select('*').eq('live_id',liveId).order('created_at',{ascending:true});
+  REGS=data||[];
+  if(!REGS.length){ $('#regList').innerHTML='<div class="empty">아직 신청자가 없어요.</div>'; return; }
+  $('#regList').innerHTML=`<div class="muted" style="margin:0 0 10px">총 ${REGS.length}명 · 확정 ${REGS.filter(r=>r.status==='confirmed').length}명</div>`+
+   REGS.map(r=>{const ok=r.status==='confirmed';return `<div class="reg">
+     <div style="display:flex;align-items:center;gap:8px">
+       <span class="nm">${hbsdEsc(r.depositor_name)}</span>
+       <span class="pill ${ok?'p-ok':'p-wait'}">${ok?'참여 확정':'입금 대기'}</span>
+       <button class="btn ${ok?'btn-ghost':'btn-ok'} btn-sm" style="margin-left:auto" onclick="toggleReg('${r.id}',${ok})">${ok?'확정 취소':'입금 확인 ✓'}</button>
+     </div>
+     <div class="kv"><b>연락처</b> ${hbsdEsc(r.contact)}</div>
+     ${r.child_age?`<div class="kv"><b>아이</b> ${hbsdEsc(r.child_age)}</div>`:''}
+     ${r.concern?`<div class="kv"><b>고민</b> ${hbsdEsc(r.concern)}</div>`:''}
+     ${r.goal?`<div class="kv"><b>얻고싶은것</b> ${hbsdEsc(r.goal)}</div>`:''}
+     ${r.present_intent?`<div class="kv"><b>발표의향</b> ${INTENT_LABEL[r.present_intent]||r.present_intent}</div>`:''}
+   </div>`;}).join('');
+}
+async function toggleReg(id,ok){
+  const { error }=await sb.from('hbsd_registrations').update({status:ok?'pending':'confirmed'}).eq('id',id);
+  if(error){toast('오류: '+error.message);return;}
+  toast(ok?'대기로 변경':'참여 확정! 🎉'); showRegs();
+}
+function downloadCsv(){
+  if(!REGS.length){toast('신청자가 없어요');return;}
+  const H=[['입금자명','depositor_name'],['연락처','contact'],['상태','status'],['아이나이','child_age'],['고민','concern'],['얻고싶은것','goal'],['발표의향','present_intent'],['신청일','created_at']];
+  const esc=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const head=H.map(h=>esc(h[0])).join(',');
+  const body=REGS.map(r=>H.map(h=>{let v=r[h[1]];if(h[1]==='status')v=v==='confirmed'?'참여확정':'입금대기';if(h[1]==='present_intent')v=INTENT_LABEL[v]||v;if(h[1]==='created_at')v=whenK(v);return esc(v);}).join(',')).join('\n');
+  const csv='﻿'+head+'\n'+body;
+  const b=new Blob([csv],{type:'text/csv;charset=utf-8'});const u=URL.createObjectURL(b);const a=document.createElement('a');
+  a.href=u;a.download='해봤수다_신청자.csv';a.click();URL.revokeObjectURL(u);
+}
+
+/* ===== 질문 ===== */
+async function loadQ(){
+  const { data:qs } = await sb.from('hbsd_questions').select('*').order('created_at',{ascending:false});
+  const rows=qs||[]; const profs=await hbsdProfilesByIds(rows.map(r=>r.user_id));
+  const order={pending:0,approved:1,hidden:2};
+  rows.sort((a,b)=>(order[a.status]-order[b.status]));
+  $('#p-q').innerHTML=rows.length?rows.map(q=>{const p=profs[q.user_id];
+    const st=q.status==='approved'?'<span class="pill p-appr">공개</span>':q.status==='hidden'?'<span class="pill p-hide">숨김</span>':'<span class="pill p-pend">대기</span>';
+    return `<div class="card">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="pill" style="background:var(--blush);color:var(--pink-d)">${hbsdEsc(q.category)}</span>${st}
+        <span class="muted">· ${hbsdEsc(p?.nickname||'엄마')}${q.is_anonymous?' · <b style="color:var(--pink-d)">🙈익명글</b>':''}</span></div>
+      <b style="display:block;margin-top:8px">${hbsdEsc(q.title)}</b>
+      <div class="q-body">${hbsdEsc(q.body)}</div>
+      <div style="display:flex;gap:8px">
+        ${q.status!=='approved'?`<button class="btn btn-ok btn-sm" onclick="setQ('${q.id}','approved')">승인(공개)</button>`:''}
+        ${q.status!=='hidden'?`<button class="btn btn-ghost btn-sm" onclick="setQ('${q.id}','hidden')">숨김</button>`:''}
+        ${q.status==='hidden'?`<button class="btn btn-ghost btn-sm" onclick="setQ('${q.id}','pending')">대기로</button>`:''}
+      </div></div>`;}).join(''):'<div class="empty">아직 질문이 없어요.</div>';
+}
+async function setQ(id,status){
+  const { error }=await sb.from('hbsd_questions').update({status}).eq('id',id);
+  if(error){toast('오류: '+error.message);return;}
+  toast(status==='approved'?'공개했어요 ✅':status==='hidden'?'숨겼어요':'대기로 변경'); loadQ();
+}
+
+/* ===== 배지 ===== */
+async function loadBadge(){
+  const { data:ps } = await sb.from('hbsd_profiles').select('*').order('created_at',{ascending:false});
+  $('#p-badge').innerHTML=`<div class="card"><b>회원 배지 관리</b>
+    <div class="muted" style="margin:4px 0 8px">'해봤어요 ✓' 배지가 있으면 질문에 답변을 달 수 있어요.</div>
+    ${(ps||[]).map(p=>`<div class="list-row">
+      <div style="flex:1"><b>${hbsdEsc(p.nickname||'엄마')}</b> ${p.is_senior?'<span class="pill p-ok">해봤어요 ✓</span>':''}</div>
+      <button class="btn ${p.is_senior?'btn-ghost':'btn-pink'} btn-sm" onclick="toggleBadge('${p.id}',${!!p.is_senior})">${p.is_senior?'배지 빼기':'배지 주기'}</button>
+    </div>`).join('')||'<div class="empty">회원이 없어요.</div>'}</div>`;
+}
+async function toggleBadge(id,has){
+  const { error }=await sb.from('hbsd_profiles').update({is_senior:!has}).eq('id',id);
+  if(error){toast('오류: '+error.message);return;}
+  toast(has?'배지 뺐어요':'배지 줬어요 👑'); loadBadge();
+}
+
+window.editLive=editLive;window.saveLive=saveLive;window.toggleReg=toggleReg;window.setQ=setQ;window.toggleBadge=toggleBadge;
+boot();
+</script>
+</body>
+</html>

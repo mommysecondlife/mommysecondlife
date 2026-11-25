@@ -402,6 +402,7 @@
   }
   nav .brand .bulb{width:32px}
   .nav-side{display:flex;gap:28px;align-items:center}
+  .nav-right-group{display:flex;align-items:center;gap:16px}
   .nav-side a{
     font-size:17px;font-weight:600;color:var(--ink);text-decoration:none;
     transition:color .2s;position:relative;
@@ -697,16 +698,17 @@
 <div class="clover-field" aria-hidden="true"></div>
 <nav id="nav">
   <a class="brand" href="index.html">
-    <svg class="bulb" viewBox="0 0 80 84" aria-hidden="true"><g class="rays"><line x1="40" y1="3" x2="40" y2="13"/><line x1="14" y1="13" x2="21" y2="20"/><line x1="66" y1="13" x2="59" y2="20"/><line x1="8" y1="38" x2="18" y2="38"/><line x1="72" y1="38" x2="62" y2="38"/></g><circle class="glow" cx="40" cy="38" r="17"/><circle class="glass" cx="40" cy="38" r="17"/><rect class="base" x="33" y="59" width="14" height="5" rx="2.5"/><rect class="base" x="35" y="67" width="10" height="5" rx="2.5"/></svg>
+    <img src="eomsera_logo_round.png" alt="" style="width:30px;height:30px;border-radius:50%;object-fit:cover;vertical-align:middle">
     엄세라
   </a>
-  <button class="nav-toggle" id="navToggle" aria-label="메뉴" aria-expanded="false"><span></span><span></span><span></span></button>
-  <div class="nav-side">
-    <a href="story.html">Story</a>
-    <a href="gratitude.html">Gratitude Journal</a>
-    <a href="ailab.html">AI LAB</a>
-    <a href="https://dinnerpick.app" target="_blank" rel="noopener">Kitchen</a>
-    <a href="community.html">Community</a>
+  <div class="nav-right-group">
+    <div class="nav-side">
+      <a href="story.html">Story</a>
+      <a href="ailab.html">AI LAB</a>
+      <a href="community.html">Community</a>
+    </div>
+    <div class="nav-account" data-account></div>
+    <button class="nav-toggle" id="navToggle" aria-label="메뉴" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
@@ -802,6 +804,14 @@
     </div>
   </section>
 
+
+  <!-- 내가 만든 앱 -->
+  <section style="text-align:center;padding:16px 24px 4px">
+    <div class="wrap" style="max-width:940px">
+      <p class="serif" style="font-size:clamp(17px,2.4vw,22px);color:var(--deep);margin:0 0 16px">이야기만 하지 않아요.<br>직접 만들어서 세상에 내놨어요 📱</p>
+      <a href="apps.html" style="display:inline-flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--line);color:var(--deep);text-decoration:none;padding:15px 28px;border-radius:999px;font-size:15.5px;font-weight:800">엄세라가 만든 앱 보기 →</a>
+    </div>
+  </section>
 
   <div class="story-end">
     <a href="ailab.html">🤖 챌린지로 직접 만들어보기</a>
@@ -980,5 +990,8 @@
 })();
 </script>
 <script>(function(){var n=document.getElementById("nav"),t=document.getElementById("navToggle");if(!n||!t)return;t.addEventListener("click",function(){var o=n.classList.toggle("open");t.setAttribute("aria-expanded",o);});n.querySelectorAll(".nav-side a").forEach(function(a){a.addEventListener("click",function(){n.classList.remove("open");});});})();</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="sudda.js?v=3"></script>
+<script src="umsera-auth.js?v=1"></script>
 </body>
 </html>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <!-- 주황 라운드 타일 배경 (앱 브랜드 #FA6A34) -->
+  <rect width="64" height="64" rx="15" fill="#FA6A34"/>
+  <!-- 숟가락 — 살짝 왼쪽으로 기울임 -->
+  <g fill="#fff" transform="rotate(-9 32 53)">
+    <ellipse cx="27" cy="17" rx="6.7" ry="8.4"/>
+    <rect x="24.4" y="22" width="5.2" height="31" rx="2.6"/>
+  </g>
+  <!-- 젓가락 — 살짝 오른쪽으로 기울임 (두 짝) -->
+  <g fill="#fff" transform="rotate(9 32 53)">
+    <rect x="35.2" y="12" width="3.3" height="41" rx="1.65"/>
+    <rect x="40.6" y="12" width="3.3" height="41" rx="1.65"/>
+  </g>
+</svg>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/dojang/">
+<title>AI 도장깨기 4주 · 무료 체험</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
+<style>
+/* VOICE: 친구가 옆에서 "오늘 한 알만 깨자" 하고 응원하는 말투
+   IDEA: 냉장고에 붙여두고 하나씩 칠하던 피아노 사과판 → 알판
+   PICTURE: 7일 × 4주 알 28개, 깨면 해찌가 고개를 내밂
+   COLOUR and TYPE: 핫핑크 + 해찌 노랑 + 흰 알, Jua 제목 / Gowun Dodum 본문
+   LAYOUT: 위 짧은 제목과 진행 막대, 바로 아래 알판, 클릭하면 미션 카드 */
+:root{color-scheme:light dark;
+ --bg:light-dark(#FFF0F4,#24141B);--card:light-dark(#FFFFFF,#331D27);--ink:light-dark(#2B1A1F,#FBEFF3);
+ --soft:light-dark(#6B4A54,#D9BFC8);--pink:light-dark(#D6336C,#FF7AA2);--pinkbg:light-dark(#FFD6E3,#4A2232);
+ --yellow:#FFD43B;--line:light-dark(#F3C4D3,#5A3141);--shell:light-dark(#FFFFFF,#FFF7EE)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;word-break:keep-all;background:var(--bg);color:var(--ink);font:16px/1.55 'Gowun Dodum',sans-serif;overflow-x:clip}
+h1,h2,h3,.jua{font-family:'Jua',sans-serif;font-weight:400}
+.wrap{max-width:1080px;margin:0 auto;padding:clamp(20px,4vw,48px) max(4vw,14px) 64px}
+header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end;margin-bottom:22px}
+header h1{margin:0;font-size:clamp(34px,6vw,52px);line-height:1.05;text-wrap:balance}
+header p{margin:6px 0 0;color:var(--soft);font-size:17px}
+.hero-chick{width:clamp(84px,14vw,130px);height:auto;display:block}
+.prog{display:flex;align-items:center;gap:12px;margin-top:14px}
+.bar{flex:1;height:14px;border-radius:999px;background:var(--pinkbg);overflow:hidden;max-width:420px}
+.bar i{display:block;height:100%;width:0;background:var(--pink);border-radius:999px;transition:width .5s}
+.count{font-family:'Jua';font-size:20px;color:var(--pink);white-space:nowrap}
+.board{background:var(--card);border-radius:28px;padding:clamp(14px,3vw,28px);box-shadow:0 8px 0 var(--line)}
+.week{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px;align-items:center;padding:14px 0;border-bottom:2px dashed var(--line)}
+.week:last-of-type{border-bottom:0}
+.wk h2{margin:0;font-size:24px;line-height:1.15;color:var(--pink)}
+.wk p{margin:2px 0 0;font-size:15px;color:var(--soft);line-height:1.35}
+.wk .badge{display:inline-block;margin-top:6px;padding:3px 10px;border-radius:999px;background:var(--yellow);color:#2B1A1F;font-family:'Jua';font-size:14px;visibility:hidden}
+.week.done .badge{visibility:visible}
+.eggs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:clamp(6px,1.4vw,14px)}
+.egg{position:relative;appearance:none;border:0;background:none;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink);font:inherit;min-height:44px}
+.shell{position:relative;width:100%;max-width:76px;aspect-ratio:66/82;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:var(--shell);border:3px solid var(--pink);display:flex;align-items:center;justify-content:center;padding-top:14%;font-family:'Jua';font-size:clamp(18px,2.6vw,28px);color:#C2255C;box-shadow:0 5px 0 var(--line);transition:transform .2s;overflow:visible}
+.shell svg.crack{position:absolute;left:6%;top:30%;width:88%;height:22%;opacity:0;transition:opacity .2s}
+.shell svg.crack path{stroke:#C2255C;stroke-width:3;fill:none;stroke-dasharray:90;stroke-dashoffset:90;transition:stroke-dashoffset .35s}
+.egg:hover .shell,.egg:focus-visible .shell{animation:wiggle .5s ease-in-out}
+.egg:hover .crack,.egg:focus-visible .crack{opacity:1}
+.egg:hover .crack path,.egg:focus-visible .crack path{stroke-dashoffset:0}
+.egg:focus-visible{outline:3px solid var(--pink);outline-offset:4px;border-radius:12px}
+.egg.big .shell{border-width:4px;border-color:#E8A400;box-shadow:0 5px 0 #F2C94C}
+.lbl{font-size:13px;line-height:1.25;text-align:center;color:var(--soft);max-width:96px}
+.egg.cracked .shell{background:var(--yellow);border-color:#E8A400;color:transparent;clip-path:none}
+.egg.cracked .shell::after{content:"";position:absolute;left:-3px;right:-3px;bottom:-3px;height:48%;background:var(--shell);border:3px solid #E8A400;border-top:0;border-radius:0 0 50% 50%/0 0 70% 70%;z-index:2;clip-path:polygon(0 18%,10% 0,22% 20%,34% 0,46% 20%,58% 0,70% 20%,82% 0,92% 18%,100% 0,100% 100%,0 100%)}
+.egg.cracked .peek{display:block}
+.peek{display:none;z-index:1;position:absolute;left:8%;top:6%;width:84%;height:auto;pointer-events:none}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-7deg)}60%{transform:rotate(6deg)}}
+.egg.locked .shell{border-style:dashed;color:light-dark(#B98A99,#9C7583)}
+.egg.locked .shell::before{content:"";position:absolute;right:-6px;top:-6px;width:24px;height:24px;border-radius:50%;background:var(--pink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5'%3E%3Crect x='6' y='11' width='12' height='9' rx='2'/%3E%3Cpath d='M9 11V8a3 3 0 0 1 6 0v3'/%3E%3C/svg%3E") center/16px no-repeat}
+.lockbox{margin-top:14px;padding:16px;border-radius:16px;background:var(--pinkbg)}
+.lockbox p{margin:0 0 10px}
+.btn.pay{display:inline-flex;align-items:center;text-decoration:none;background:var(--pink);color:#fff}
+.bonus{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bonus b{font-family:'Jua';font-weight:400;font-size:20px;color:var(--pink);margin-right:6px}
+.bonus span{padding:6px 12px;border-radius:999px;background:var(--card);border:2px dashed var(--line);font-size:15px;color:var(--soft)}
+.finish{display:none;margin-top:22px;background:var(--pink);color:#fff;border-radius:28px;padding:22px 26px;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center}
+.finish.on{display:grid}
+.finish img{width:110px;height:auto}
+.finish h3{margin:0;font-size:30px;line-height:1.1}
+.switch{display:inline-flex;width:72px;height:38px;border-radius:999px;background:#fff;padding:4px;justify-content:flex-end;margin-top:10px}
+.switch i{width:30px;height:30px;border-radius:50%;background:var(--yellow)}
+.note{margin-top:14px;font-size:14px;color:var(--soft)}
+/* panel */
+.scrim{position:fixed;inset:0;background:rgba(43,26,31,.45);display:none;z-index:10}
+.scrim.on{display:block}
+.panel{position:fixed;z-index:11;right:0;top:0;bottom:0;width:min(460px,100%);background:var(--card);padding:26px 24px 30px;overflow-y:auto;transform:translateX(100%);transition:transform .3s;box-shadow:-8px 0 0 var(--line)}
+.panel.on{transform:none}
+.panel .x{position:absolute;right:14px;top:14px;width:44px;height:44px;border-radius:50%;border:0;background:var(--pinkbg);color:var(--ink);font-size:22px;cursor:pointer}
+.panel .day{font-family:'Jua';color:var(--pink);font-size:18px}
+.panel h3{margin:2px 48px 8px 0;font-size:30px;line-height:1.1}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.meta span{padding:4px 10px;border-radius:999px;background:var(--pinkbg);font-size:14px}
+.panel h4{margin:18px 0 6px;font-family:'Jua';font-weight:400;font-size:19px}
+.panel p{margin:0}
+pre{white-space:pre-wrap;background:var(--bg);border-radius:16px;padding:14px 16px;font:15px/1.6 'Gowun Dodum',sans-serif;margin:0;border:2px solid var(--line)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.btn{min-height:44px;padding:10px 18px;border-radius:999px;border:0;cursor:pointer;font-family:'Jua';font-size:18px}
+.btn.pri{background:var(--pink);color:#fff}
+.btn.sec{background:var(--pinkbg);color:var(--ink)}
+.stamp{margin-top:16px;padding:12px 14px;border-radius:16px;background:var(--yellow);color:#2B1A1F;font-size:15px}
+@media(max-width:720px){.week{grid-template-columns:minmax(0,1fr)}.lbl{font-size:11px}header{grid-template-columns:minmax(0,1fr) auto}}
+@media(prefers-reduced-motion:reduce){.egg:hover .shell{animation:none}.panel,.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div>
+<h1>AI 도장깨기 4주</h1>
+<p>하루 한 알, 28일이면 해찌가 스위치를 켜요. 1~3일차는 무료로 바로 깨볼 수 있어요.</p>
+<div class="prog"><div class="bar"><i id="barFill"></i></div><span class="count" id="count">0 / 28</span></div>
+</div>
+<img class="hero-chick" src="haechi_fight.png" alt="주먹 쥐고 응원하는 해찌">
+</header>
+<main class="board" id="board" aria-label="4주 알판"></main>
+<div class="bonus"><b>졸업 보너스</b><span>동네 정보 검색 사이트</span><span>일정 정리 생활 서비스</span><span>안드로이드 앱 출시</span><span>iOS 앱 출시</span></div>
+<section class="finish" id="finish" aria-live="polite">
+<img src="haechi_jump.png" alt="신나게 뛰는 해찌">
+<div><h3>28알 완주! 해찌가 스위치를 켰어요</h3><p>엄마의 세컨드 라이프 ON</p><span class="switch" aria-hidden="true"><i></i></span></div>
+</section>
+<p class="note">진행 상황은 이 브라우저에만 저장돼요. 엄세라 · @mommysecondlife</p>
+</div>
+<div class="scrim" id="scrim"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="pTitle">
+<button class="x" id="closeBtn" aria-label="닫기">×</button>
+<div class="day" id="pDay"></div>
+<h3 id="pTitle"></h3>
+<div class="meta" id="pMeta"></div>
+<div id="freeBox"><h4>오늘의 미션</h4><p id="pMission"></p>
+<h4>복붙 프롬프트</h4><pre id="pPrompt"></pre>
+<div class="row"><button class="btn sec" id="copyBtn">프롬프트 복사</button><button class="btn pri" id="doneBtn">깼어요!</button></div>
+<div class="stamp" id="pStamp"></div></div>
+<div class="lockbox" id="lockBox" hidden><p><b>4일차부터는 곧 열려요.</b></p><p>열리면 가장 먼저 알려드릴게요.</p><a class="btn pay" id="payBtn" href="#" target="_blank" rel="noopener">오픈 알림 받기</a></div>
+</aside>
+<script>
+{
+const WEEKS=[
+ ['1주차','AI랑 친해지기','끝나면 → 내 말투 비서와 첫 카드뉴스'],
+ ['2주차','꾸준히, 그리고 캐릭터','끝나면 → 예약 발행과 첫 인스타툰'],
+ ['3주차','내 간판, 내 사람','끝나면 → 홈페이지와 나를 기다리는 사람들'],
+ ['4주차','첫 상품과 자동화','끝나면 → 내 전자책과 내 웹사이트']];
+const D=[
+['매일 AI 브리핑','30분','Claude Pro, 카카오톡 연결','매일 아침 AI 공부용 유튜브 영상 3개가 카톡으로 오게 세팅해요.','매일 아침 AI 공부용 유튜브 영상 3개를 골라서 카카오톡 ‘나와의 채팅’으로 보내줘.\n채널: [내가 볼 채널 이름들]\n기준: 내 수준 [처음/조금 써봄], 최근 7일 영상, 이미 보낸 영상은 빼기\n형식: 제목 / 링크 / 이걸 보면 할 수 있게 되는 것 한 줄 / 오늘 따라 해볼 것 1개','다음 날 아침 카톡으로 영상 3개가 왔다'],
+['내 말투 설명서','30분','내가 쓴 글 3개','내가 쓴 글 3개로 AI가 내 말투를 배우게 해요.','너는 내 ‘말투 설명서’를 만드는 편집자야.\n나는 [예: 애 둘 워킹맘], 글 쓰는 곳은 [스레드/인스타/블로그].\n내가 쓴 글: [글 1] [글 2] [글 3]\n1. 내 말투 특징 5개 + 절대 안 쓰는 표현 5개\n2. 판단 기준: 다 읽은 사람이 손에 무언가 들고 떠나는가\n3. 주제를 주면 서로 다른 각도의 후보 3개를 쓰는 규칙\n내 글에 있는 특징만 뽑고 지어내지 마.','말투 설명서를 메모장에 저장했다'],
+['비서 저장 + 첫 글','20분','Claude 프로젝트 (Pro)','설명서를 프로젝트에 넣어두고, 주제 한 줄로 첫 글을 받아요.','[말투 설명서 붙여넣기]\n이걸 프로젝트 지침에 넣을 수 있게 정리하고, 비서 이름 3개와 시작 문구 3개를 추천해줘.\n그다음 첫 주제: [예: 복직 첫 주에 깨달은 것]','비서를 열어 주제 하나로 후보 글 3개를 받았다'],
+['핀터레스트 레퍼런스','30분','핀터레스트','','',''],
+['카드뉴스 글 받기','30분','Claude 또는 ChatGPT','','',''],
+['검사받고 디자인','40분','Claude 디자인 또는 미리캔버스','','',''],
+['첫 카드뉴스 올리기','20분','인스타그램','','',''],
+['계정 구조 빌리기','30분','참고 계정 게시물 3개','','',''],
+['블로그 키워드','30분','네이버 크리에이터 어드바이저','','',''],
+['블로그 글 발행','1시간','검색되는 AI(퍼플렉시티 등)','','',''],
+['몰아 쓰고 예약','1시간','SNS 예약 기능','','',''],
+['대표 캐릭터 시트','40분','ChatGPT 이미지','','',''],
+['인스타툰 10컷 설계','40분','ChatGPT','','',''],
+['인스타툰 올리기','1~2시간','ChatGPT 이미지, 미리캔버스','','',''],
+['인스타툰 → AI 영상','40분','영상 생성 도구','','',''],
+['내 목소리 릴스','40분','녹음, 편집 앱','','',''],
+['로고와 브랜드 색','40분','핀터레스트, ChatGPT','','',''],
+['한 장 홈페이지','1시간','Claude','','',''],
+['오픈채팅·뉴스레터','30분','카카오 오픈채팅 또는 뉴스레터 도구','','',''],
+['첫 모임 모집글','40분','모임 정보','','',''],
+['1시간 특강 원고','1시간','줌','','',''],
+['사줄 사람 그려보기','40분','내 채널 반응, 자주 받는 질문','','',''],
+['전자책 목차 + 1장','1시간','Claude','','',''],
+['전자책 PDF','40분','Claude 또는 미리캔버스','','',''],
+['후기로 다음 바꾸기','30분','설문 응답이나 후기','','',''],
+['관심 뉴스 자동 정리','30분','Claude Pro 예약 작업','','',''],
+['자동 발행 연결','1시간','예약 발행 도구','','',''],
+['웹사이트 + 도메인','1~2시간','Claude, 도메인 구매','','','']
+];
+const FREE=3;
+const PAY_URL='https://open.kakao.com/o/ghfNIUch'; // ← 오픈 알림 받기(해봤수다 오픈채팅). 뉴스레터로 바꾸려면: https://page.stibee.com/subscriptions/518741
+const KEY='umsera-dojang-4w-free';
+let done=new Set();
+try{const s=JSON.parse(localStorage.getItem(KEY)||'[]');done=new Set(s)}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify([...done]))}catch(e){}};
+const board=document.getElementById('board');
+const crack='<svg class="crack" viewBox="0 0 100 20" aria-hidden="true"><path d="M0 10 L12 3 L24 15 L36 4 L48 16 L60 4 L72 15 L84 5 L100 11"/></svg>';
+board.innerHTML=WEEKS.map((w,wi)=>`<section class="week" id="w${wi}"><div class="wk"><h2>${w[0]}<br>${w[1]}</h2><p>${w[2]}</p><span class="badge">${w[0]} 완주!</span></div><div class="eggs">${
+ D.slice(wi*7,wi*7+7).map((d,i)=>{const n=wi*7+i+1;return `<button class="egg${n%7===0?' big':''}${n>FREE?' locked':''}" data-n="${n}" aria-label="${n}일차 ${d[0]}"><span class="shell">${n}${crack}<img class="peek" src="haechi_head.png" alt=""></span><span class="lbl">${d[0]}</span></button>`}).join('')
+}</div></section>`).join('');
+const render=()=>{
+ document.querySelectorAll('.egg').forEach(b=>{const n=+b.dataset.n;b.classList.toggle('cracked',done.has(n));b.setAttribute('aria-pressed',done.has(n))});
+ WEEKS.forEach((w,wi)=>{let all=true;for(let k=1;k<=7;k++)if(!done.has(wi*7+k))all=false;document.getElementById('w'+wi).classList.toggle('done',all)});
+ document.getElementById('count').textContent=done.size+' / 28 깼어요';
+ document.getElementById('barFill').style.width=(done.size/28*100)+'%';
+ document.getElementById('finish').classList.toggle('on',done.size===28);
+};
+const panel=document.getElementById('panel'),scrim=document.getElementById('scrim');
+let cur=1,lastBtn=null;
+const open=n=>{cur=n;const d=D[n-1],w=WEEKS[Math.floor((n-1)/7)];const lk=n>FREE;document.getElementById('freeBox').hidden=lk;document.getElementById('lockBox').hidden=!lk;document.getElementById('payBtn').href=PAY_URL;
+ document.getElementById('pDay').textContent=`${w[0]} · ${n}일차`;
+ document.getElementById('pTitle').textContent=d[0];
+ document.getElementById('pMeta').innerHTML=`<span>${d[1]}</span><span>${d[2]}</span>`;
+ document.getElementById('pMission').textContent=d[3];
+ document.getElementById('pPrompt').textContent=d[4];
+ document.getElementById('pStamp').textContent='도장 기준 · '+d[5];
+ document.getElementById('doneBtn').textContent=done.has(n)?'다시 붙이기':'깼어요!';
+ document.getElementById('copyBtn').textContent='프롬프트 복사';
+ panel.classList.add('on');scrim.classList.add('on');document.getElementById('closeBtn').focus()};
+const close=()=>{panel.classList.remove('on');scrim.classList.remove('on');if(lastBtn)lastBtn.focus()};
+board.addEventListener('click',e=>{const b=e.target.closest('.egg');if(!b)return;lastBtn=b;open(+b.dataset.n)});
+document.getElementById('closeBtn').addEventListener('click',close);
+scrim.addEventListener('click',close);
+panel.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+document.getElementById('doneBtn').addEventListener('click',()=>{if(done.has(cur))done.delete(cur);else done.add(cur);save();render();close()});
+document.getElementById('copyBtn').addEventListener('click',async e=>{const t=D[cur-1][4];try{await navigator.clipboard.writeText(t);e.target.textContent='복사했어요!'}catch(err){const r=document.createRange();r.selectNodeContents(document.getElementById('pPrompt'));const s=getSelection();s.removeAllRanges();s.addRange(r);e.target.textContent='선택됐어요, 복사하세요'}});
+render();
+}
+</script>
+</body>
+</html>
