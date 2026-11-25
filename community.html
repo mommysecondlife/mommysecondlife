@@ -22,7 +22,9 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
   @media(min-width:1088px){.wrap{padding-left:0;padding-right:0}}
-  #liveSlot,.cats,.bar,#feed,#askbox{max-width:760px}
+  #feed{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+  #feed .empty{grid-column:1/-1}
+  @media(max-width:720px){#feed{grid-template-columns:1fr}}
   /* 코멘토식 ask 박스 */
   #askbox{margin-bottom:18px}
   .askbox{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px 20px 18px;box-shadow:var(--shadow)}
@@ -88,8 +90,9 @@
 
   /* live notice */
   .live-card{margin:16px 0;background:linear-gradient(135deg,#fff,#FFF7FA);border:1px solid var(--line);
-    border-radius:18px;padding:16px 18px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow)}
+    border-radius:18px;padding:16px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:var(--shadow)}
   .live-card .ic{font-size:26px}
+  .live-card .txt{flex:1 1 auto;min-width:0}
   .live-card b{display:block;font-size:15px}
   .live-card span{font-size:13px;color:var(--mut)}
   .live-card .go{margin-left:auto;white-space:nowrap}
@@ -107,7 +110,7 @@
   .sort.on{background:#fff;color:var(--pink);box-shadow:0 1px 4px rgba(0,0,0,.06)}
 
   /* feed */
-  .qcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;margin-bottom:12px;cursor:pointer;transition:transform .12s,box-shadow .15s}
+  .qcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 17px;cursor:pointer;transition:transform .12s,box-shadow .15s}
   .qcard:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
   .qcat{display:inline-block;background:var(--blush);color:var(--pink-d);font-weight:800;font-size:12px;padding:4px 10px;border-radius:999px;margin-bottom:10px}
   .qtitle{font-weight:800;font-size:16.5px;line-height:1.4;margin:0 0 6px}
@@ -218,7 +221,6 @@
       <h2>다음 해봤수다 모임 <span style="color:var(--mut);font-weight:700;font-size:.6em">(온라인 줌)</span></h2>
       <p class="sub">먼저 해본 엄마가 줌으로 풀어놓는 시간. 얼굴 공개 없이 편하게 듣고, 궁금한 건 바로 물어봐요.</p>
       <div id="liveSlot"></div>
-      <div style="margin-top:14px"><a class="btn-live" href="live.html">신청하기 →</a></div>
     </div>
   </section>
 
@@ -348,10 +350,11 @@ async function renderLive(){
   if(live){
     const meta=[hbsdWhen(live.live_at), live.duration_min?`${live.duration_min}분`:'', live.price!=null?`${Number(live.price).toLocaleString('ko-KR')}원`:''].filter(Boolean).join(' · ');
     $('#liveSlot').innerHTML=`<div class="live-card"><div class="ic">💻</div>
-      <div><b>${hbsdEsc(live.title)}</b><span>${meta}</span></div></div>`;
+      <div class="txt"><b>${hbsdEsc(live.title)}</b><span>${meta}</span></div>
+      <a class="btn-live go" href="live.html">신청하기 →</a></div>`;
   }else{
     $('#liveSlot').innerHTML=`<div class="live-card"><div class="ic">💻</div>
-      <div><b>다음 모임 준비 중</b><span>열리면 여기서 가장 먼저 알려드릴게요</span></div></div>`;
+      <div class="txt"><b>다음 모임 준비 중</b><span>열리면 여기서 가장 먼저 알려드릴게요</span></div></div>`;
   }
 }
 
