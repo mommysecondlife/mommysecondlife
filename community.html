@@ -20,7 +20,7 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
   @media(min-width:1088px){.wrap{padding-left:0;padding-right:0}}
-  #liveSlot,.cats,.bar,#feed,#askbox{max-width:760px;margin-left:auto;margin-right:auto}
+  #liveSlot,.cats,.bar,#feed,#askbox{max-width:760px}
   /* 코멘토식 ask 박스 */
   #askbox{margin-bottom:18px}
   .askbox{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px 20px 18px;box-shadow:var(--shadow)}
@@ -76,6 +76,13 @@
   .page-head{padding:130px 24px 20px;text-align:center}
   .page-head h1{font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-.03em;margin:0 0 12px}
   .page-head p{color:var(--mut);font-size:16px;max-width:560px;margin:0 auto}
+  .sec{padding:26px 0}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.16em;color:var(--pink);margin-bottom:16px}
+  .eyebrow::before{content:"";width:26px;height:1.5px;background:var(--pink);border-radius:2px}
+  .sec h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.02em;margin:0 0 10px}
+  .sec .sub{color:var(--mut);font-size:16px;margin:0 0 22px;max-width:620px;line-height:1.65}
+  .btn-live{display:inline-flex;align-items:center;gap:6px;background:var(--pink);color:#fff;font-weight:800;font-size:15px;padding:13px 20px;border-radius:14px;box-shadow:var(--shadow)}
+  .btn-live:hover{background:var(--pink-d)}
 
   /* live notice */
   .live-card{margin:16px 0;background:linear-gradient(135deg,#fff,#FFF7FA);border:1px solid var(--line);
@@ -189,23 +196,47 @@
 
 <main id="top">
   <section class="page-head">
-    <h1>해봤수다 질문방</h1>
-    <p>먼저 해본 엄마들에게 편하게 물어봐요. 블로그 수익·유료 AI 결제·재테크 첫걸음까지.</p>
+    <h1>엄세라 해봤수다</h1>
+    <p>"혼자 하지 말자." 먼저 해본 엄마들이 모여, 묻고 답하고 함께 실행하는 곳이에요.</p>
   </section>
-  <div class="wrap">
-  <div id="askbox"></div>
-  <div id="liveSlot"></div>
 
-  <div class="cats" id="cats"></div>
-  <div class="bar">
-    <div class="sorts">
-      <button class="sort on" data-sort="new">최신순</button>
-      <button class="sort" data-sort="hot">궁금해요순</button>
+  <!-- 1. 해봤수다 소개 -->
+  <section class="sec">
+    <div class="wrap">
+      <span class="eyebrow">해봤수다란</span>
+      <h2>먼저 해보고, 솔직하게 나눠요</h2>
+      <p class="sub">블로그·AI·부업·재테크… 이것저것 다 해본 엄마들의 진짜 경험이 모이는 곳이에요. 성공담도 실패담도 포장 없이. 질문 하나가 비슷한 고민의 엄마 여럿을 구해요.</p>
     </div>
-  </div>
+  </section>
 
-  <div id="feed"><div class="empty">불러오는 중…</div></div>
-  </div>
+  <!-- 2. 다음 모임 (온라인 줌) -->
+  <section class="sec">
+    <div class="wrap">
+      <span class="eyebrow">다음 모임</span>
+      <h2>다음 해봤수다 모임 <span style="color:var(--mut);font-weight:700;font-size:.6em">(온라인 줌)</span></h2>
+      <p class="sub">먼저 해본 엄마가 줌으로 풀어놓는 시간. 얼굴 공개 없이 편하게 듣고, 궁금한 건 바로 물어봐요.</p>
+      <div id="liveSlot"></div>
+      <div style="margin-top:14px"><a class="btn-live" href="live.html">신청하기 →</a></div>
+    </div>
+  </section>
+
+  <!-- 3. 질문 나눔 -->
+  <section class="sec">
+    <div class="wrap">
+      <span class="eyebrow">질문 나눔</span>
+      <h2>먼저 해본 엄마들에게 물어봐요</h2>
+      <p class="sub">궁금한 거 편하게 올려요. 민감한 건 익명으로도 돼요. (올린 질문은 엄세라 확인 후 공개)</p>
+      <div id="askbox"></div>
+      <div class="cats" id="cats"></div>
+      <div class="bar">
+        <div class="sorts">
+          <button class="sort on" data-sort="new">최신순</button>
+          <button class="sort" data-sort="hot">궁금해요순</button>
+        </div>
+      </div>
+      <div id="feed"><div class="empty">불러오는 중…</div></div>
+    </div>
+  </section>
 </main>
 
 <button class="fab" id="writeFab">✏️ 질문 쓰기</button>
@@ -313,12 +344,12 @@ async function renderLive(){
   const { data } = await sb.from('hbsd_lives_public').select('*').order('live_at',{ascending:true}).limit(1);
   const live=(data||[])[0];
   if(live){
-    $('#liveSlot').innerHTML=`<div class="live-card"><div class="ic">🎤</div>
-      <div><b>다음 해봤수다 라이브</b><span>${hbsdEsc(live.title)} · ${hbsdWhen(live.live_at)}</span></div>
-      <a class="btn btn-pink go" href="live.html">신청하기</a></div>`;
+    const meta=[hbsdWhen(live.live_at), live.duration_min?`${live.duration_min}분`:'', live.price!=null?`${Number(live.price).toLocaleString('ko-KR')}원`:''].filter(Boolean).join(' · ');
+    $('#liveSlot').innerHTML=`<div class="live-card"><div class="ic">💻</div>
+      <div><b>${hbsdEsc(live.title)}</b><span>${meta}</span></div></div>`;
   }else{
-    $('#liveSlot').innerHTML=`<div class="live-card"><div class="ic">🎤</div>
-      <div><b>다음 해봤수다 라이브</b><span>곧 열려요 — 열리면 여기서 가장 먼저 알려드릴게요</span></div></div>`;
+    $('#liveSlot').innerHTML=`<div class="live-card"><div class="ic">💻</div>
+      <div><b>다음 모임 준비 중</b><span>열리면 여기서 가장 먼저 알려드릴게요</span></div></div>`;
   }
 }
 

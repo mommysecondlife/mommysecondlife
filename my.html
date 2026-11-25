@@ -82,7 +82,8 @@ async function run(){
         ? `<a class="zoom" href="${hbsdEsc(zurl)}" target="_blank" rel="noopener">🎥 줌으로 참여하기</a>`
         : `<div class="note">🎥 줌 링크는 <b>라이브 전날</b>부터 여기에 보여요.</div>`;
     }else{
-      zoneHtml = `<div class="note">💛 입금이 확인되면 <b>참여 확정</b>으로 바뀌고, 줌 링크가 열려요.</div>`;
+      let bank=null; try{ const {data}=await sb.rpc('hbsd_bank_for',{p_live_id:r.live_id}); bank=data||null; }catch(e){}
+      zoneHtml = `<div class="note">💳 입금 계좌: <b>${bank?hbsdEsc(bank):'관리자 안내 대기'}</b><br>입금이 확인되면 <b>참여 확정</b>으로 바뀌고 줌 링크가 열려요.</div>`;
     }
     cards.push(`<div class="card">
       <div class="row">

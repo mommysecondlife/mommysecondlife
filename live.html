@@ -109,8 +109,8 @@
 
 <main id="top">
   <section class="page-head">
-    <h1>해봤수다 라이브</h1>
-    <p>먼저 해본 엄마들과 함께하는 90분. 얼굴 공개 없이 편하게 들어요.</p>
+    <h1>해봤수다 모임 <span style="color:var(--mut);font-weight:700;font-size:.55em">(온라인 줌)</span></h1>
+    <p>먼저 해본 엄마가 줌으로 풀어놓는 시간. 얼굴 공개 없이 편하게 들어요.</p>
   </section>
   <div class="content" id="content"><div class="empty">불러오는 중…</div></div>
 </main>
@@ -147,7 +147,7 @@
 <script src="umsera-auth.js?v=1"></script>
 <script>
 const $=s=>document.querySelector(s);
-let LIVE=null, ME=null, MYREG=null, INTENT='';
+let LIVE=null, ME=null, MYREG=null, INTENT='', MYBANK=null;
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2000);}
 function won(n){return n==null?'':Number(n).toLocaleString('ko-KR')+'원';}
 function whenK(s){if(!s)return'미정';const d=new Date(s),p=n=>String(n).padStart(2,'0'),dy=['일','월','화','수','목','금','토'];
@@ -158,7 +158,8 @@ async function run(){
   const { data:lives } = await sb.from('hbsd_lives_public').select('*').order('live_at',{ascending:true});
   LIVE=(lives||[]).find(l=>!l.live_at || new Date(l.live_at)>=new Date(Date.now()-864e5)) || (lives||[])[0];
   if(!LIVE){ $('#content').innerHTML='<div class="empty">🎤 라이브를 준비하고 있어요.<br>열리면 여기서 가장 먼저 알려드릴게요!</div>'; return; }
-  if(ME){ const { data:reg } = await sb.from('hbsd_registrations').select('*').eq('live_id',LIVE.id).maybeSingle(); MYREG=reg||null; }
+  if(ME){ const { data:reg } = await sb.from('hbsd_registrations').select('*').eq('live_id',LIVE.id).maybeSingle(); MYREG=reg||null;
+    if(MYREG){ try{ const { data:bk }=await sb.rpc('hbsd_bank_for',{p_live_id:LIVE.id}); MYBANK=bk||null; }catch(e){} } }
   render();
 }
 
@@ -170,22 +171,23 @@ function render(){
   }else if(MYREG){
     const ok=MYREG.status==='confirmed';
     cta=`<div class="status ${ok?'st-ok':'st-wait'}">${ok?'참여 확정 ✅':'입금 대기 중 ⏳'}</div>
-      <p class="muted">${ok?'줌 링크는 라이브 전날부터 ':'입금이 확인되면 '}<a href="my.html">내 신청</a>에서 보여요.</p>`;
+      ${(!ok&&MYBANK)?`<div class="lockline" style="margin-top:10px">💳 입금 계좌: <b>${hbsdEsc(MYBANK)}</b>${LIVE.price!=null?` · ${won(LIVE.price)}`:''}</div>`:''}
+      <p class="muted">${ok?'줌 링크는 모임 전날부터 ':'입금이 확인되면 참여 확정돼요. '}<a href="my.html">내 신청</a>에서도 볼 수 있어요.</p>`;
   }else{
     cta=`<button class="btn btn-pink" id="applyBtn">신청하기</button>`;
   }
   $('#content').innerHTML=`
     <div class="live">
-      <span class="badge">🎤 해봤수다 라이브</span>
+      <span class="badge">💻 해봤수다 모임</span>
       <h2>${hbsdEsc(l.title||'라이브')}</h2>
       <div class="info">
         <div class="row"><span class="k">일시</span><span class="v">${whenK(l.live_at)}${l.duration_min?` · ${l.duration_min}분`:''}</span></div>
         <div class="row"><span class="k">발표자</span><span class="v">${hbsdEsc(l.speaker||'미정')}</span></div>
         <div class="row"><span class="k">참가비</span><span class="v">${l.price!=null?won(l.price):'안내 예정'}</span></div>
-        <div class="row"><span class="k">입금 계좌</span><span class="v">${hbsdEsc(l.bank_account||'신청 후 안내')}</span></div>
+        <div class="row"><span class="k">입금 계좌</span><span class="v">🔒 신청하면 안내해드려요</span></div>
         <div class="row"><span class="k">입금 마감</span><span class="v">${l.deposit_deadline?whenK(l.deposit_deadline):'안내 예정'}</span></div>
       </div>
-      <div class="lockline">🔒 줌 링크는 참여 확정된 분께 <b>라이브 전날부터</b> 공개돼요.</div>
+      <div class="lockline">🔒 줌 링크는 참여 확정된 분께 <b>모임 전날부터</b> 공개돼요.</div>
       ${cta}
     </div>`;
   if($('#loginBtn'))$('#loginBtn').onclick=hbsdLoginKakao;
@@ -211,7 +213,9 @@ $('#submitBtn').onclick=async()=>{
     goal:$('#f_goal').value.trim()||null,present_intent:INTENT||null};
   const { error }=await sb.from('hbsd_registrations').insert(payload);
   if(error){ toast('오류: '+error.message); return; }
-  closeForm(); MYREG={...payload,status:'pending'}; render();
+  closeForm(); MYREG={...payload,status:'pending'};
+  try{ const { data:bk }=await sb.rpc('hbsd_bank_for',{p_live_id:LIVE.id}); MYBANK=bk||null; }catch(e){}
+  render();
   toast('신청 접수됐어요! 계좌로 입금해 주세요 💛');
 };
 
