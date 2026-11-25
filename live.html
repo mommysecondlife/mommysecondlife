@@ -249,8 +249,11 @@ function render(){
     cta=`<button class="btn btn-kakao" id="loginBtn">카카오 로그인하고 신청하기</button>`;
   }else if(MYREG){
     const ok=MYREG.status==='confirmed';
+    const bankLine = MYBANK
+      ? `<div class="lockline" style="margin-top:10px">💳 ${ok?'입금 계좌 <span style="opacity:.75">(참고)</span>':'입금 계좌'}: <b>${hbsdEsc(MYBANK)}</b>${LIVE.price!=null?` · ${won(LIVE.price)}`:''}</div>`
+      : (!ok ? `<div class="lockline" style="margin-top:10px">💳 입금 계좌: <b>관리자 안내 대기</b></div>` : '');
     cta=`<div class="status ${ok?'st-ok':'st-wait'}">${ok?'참여 확정 ✅':'입금 대기 중 ⏳'}</div>
-      ${(!ok&&MYBANK)?`<div class="lockline" style="margin-top:10px">💳 입금 계좌: <b>${hbsdEsc(MYBANK)}</b>${LIVE.price!=null?` · ${won(LIVE.price)}`:''}</div>`:''}
+      ${bankLine}
       <p class="muted">${ok?'줌 링크는 모임 전날부터 ':'입금이 확인되면 참여 확정돼요. '}<a href="my.html">내 신청</a>에서도 볼 수 있어요.</p>`;
   }else{
     cta=`<button class="btn btn-pink" id="applyBtn">신청하기</button>`;
