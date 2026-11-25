@@ -82,7 +82,7 @@ async function boot(){
   $('#app').innerHTML=`
     <h1>관리자</h1>
     <div class="tabs">
-      <button class="tab on" data-t="live">📅 라이브</button>
+      <button class="tab on" data-t="live">📅 모임</button>
       <button class="tab" data-t="regs">📋 신청자</button>
       <button class="tab" data-t="q">✅ 질문</button>
       <button class="tab" data-t="badge">👑 배지</button>
@@ -106,24 +106,29 @@ async function loadLives(){
   const items=(lives||[]).map(l=>`<div class="list-row">
     <div style="flex:1"><b>${hbsdEsc(l.title||'(제목 없음)')}</b> ${l.is_published?'<span class="pill p-ok">공개</span>':'<span class="pill p-wait">비공개</span>'}
       <div class="muted">${whenK(l.live_at)||'일시 미정'} · ${l.price!=null?won(l.price):'가격 미정'}</div></div>
+    <button class="btn btn-ghost btn-sm" onclick="editLive('${l.id}',true)">🔁 복제</button>
     <button class="btn btn-ghost btn-sm" onclick="editLive('${l.id}')">편집</button></div>`).join('');
   $('#p-live').innerHTML=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-      <b>라이브 목록</b><button class="btn btn-pink btn-sm" onclick="editLive('')">+ 새 라이브</button></div>
-    ${items||'<div class="empty">아직 라이브가 없어요.</div>'}</div>
+      <b>모임 목록</b><button class="btn btn-pink btn-sm" onclick="editLive('')">+ 새 모임</button></div>
+    ${items||'<div class="empty">아직 모임이 없어요.</div>'}</div>
     <div id="liveForm"></div>`;
   window._lives=Object.fromEntries((lives||[]).map(l=>[l.id,l]));
+  window._defaultBank=(lives&&lives[0])?lives[0].bank_account:null;
 }
-function editLive(id){
-  const l=id?window._lives[id]:{};
+function editLive(id, asCopy){
+  let l, saveId, head;
+  if(asCopy){ l={...window._lives[id], live_at:'', deposit_deadline:'', zoom_url:'', is_published:false}; saveId=''; head='모임 복제 — 날짜만 새로 정하면 돼요'; }
+  else if(id){ l=window._lives[id]; saveId=id; head='모임 편집'; }
+  else { l={duration_min:60, price:10000, bank_account:window._defaultBank||''}; saveId=''; head='새 모임'; }
   $('#liveForm').innerHTML=`<div class="card">
-    <b>${id?'라이브 편집':'새 라이브'}</b>
+    <b>${head}</b>
     <label class="fld">제목</label><input class="inp" id="l_title" value="${hbsdEsc(l.title||'')}">
     <div class="row2">
       <div><label class="fld">발표자</label><input class="inp" id="l_speaker" value="${hbsdEsc(l.speaker||'')}"></div>
-      <div><label class="fld">시간(분)</label><input class="inp" id="l_dur" type="number" value="${l.duration_min||90}"></div>
+      <div><label class="fld">시간(분)</label><input class="inp" id="l_dur" type="number" value="${l.duration_min||60}"></div>
     </div>
     <div class="row2">
-      <div><label class="fld">라이브 일시</label><input class="inp" id="l_at" type="datetime-local" value="${toLocalInput(l.live_at)}"></div>
+      <div><label class="fld">모임 일시</label><input class="inp" id="l_at" type="datetime-local" value="${toLocalInput(l.live_at)}"></div>
       <div><label class="fld">입금 마감</label><input class="inp" id="l_dl" type="datetime-local" value="${toLocalInput(l.deposit_deadline)}"></div>
     </div>
     <div class="row2">
@@ -134,7 +139,7 @@ function editLive(id){
     <input class="inp" id="l_zoom" value="${hbsdEsc(l.zoom_url||'')}" placeholder="https://zoom.us/j/...">
     <label class="chk"><input type="checkbox" id="l_pub" ${l.is_published?'checked':''}> 공개하기 (체크하면 라이브 페이지에 떠요)</label>
     <div style="margin-top:16px;display:flex;gap:8px">
-      <button class="btn btn-pink" onclick="saveLive('${id}')">저장</button>
+      <button class="btn btn-pink" onclick="saveLive('${saveId}')">저장</button>
       <button class="btn btn-ghost" onclick="document.getElementById('liveForm').innerHTML=''">닫기</button>
     </div></div>`;
   $('#liveForm').scrollIntoView({behavior:'smooth',block:'center'});
@@ -158,11 +163,13 @@ async function loadRegs(){
   const opts=(lives||[]).map(l=>`<option value="${l.id}">${hbsdEsc(l.title||'(제목)')} · ${whenK(l.live_at)||''}</option>`).join('');
   $('#p-regs').innerHTML=`<div class="card">
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <select class="inp" id="regLive" style="flex:1;min-width:200px">${opts||'<option>라이브 없음</option>'}</select>
-      <button class="btn btn-ghost btn-sm" id="csvBtn">⬇ CSV 다운로드</button>
-    </div></div>
+      <select class="inp" id="regLive" style="flex:1;min-width:180px">${opts||'<option>모임 없음</option>'}</select>
+      <button class="btn btn-ghost btn-sm" id="copyContactsBtn">📋 확정자 연락처</button>
+      <button class="btn btn-ghost btn-sm" id="csvBtn">⬇ CSV</button>
+    </div>
+    <div class="muted" style="margin-top:8px">📋 확정자 연락처 = 전날 리마인드 카톡/문자용 (이름·연락처 복사)</div></div>
     <div id="regList"></div>`;
-  $('#regLive').onchange=showRegs; $('#csvBtn').onclick=downloadCsv;
+  $('#regLive').onchange=showRegs; $('#csvBtn').onclick=downloadCsv; $('#copyContactsBtn').onclick=copyContacts;
   if(lives&&lives.length) showRegs();
 }
 let REGS=[];
@@ -189,6 +196,14 @@ async function toggleReg(id,ok){
   const { error }=await sb.from('hbsd_registrations').update({status:ok?'pending':'confirmed'}).eq('id',id);
   if(error){toast('오류: '+error.message);return;}
   toast(ok?'대기로 변경':'참여 확정! 🎉'); showRegs();
+}
+function copyContacts(){
+  const ok=REGS.filter(r=>r.status==='confirmed');
+  if(!ok.length){toast('참여 확정자가 아직 없어요');return;}
+  const text=ok.map(r=>`${r.depositor_name} · ${r.contact}`).join('\n');
+  (navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject())
+    .then(()=>toast(`확정자 ${ok.length}명 연락처 복사됐어요 📋`))
+    .catch(()=>{ window.prompt('아래를 복사해서 쓰세요 (전날 리마인드용)', text); });
 }
 function downloadCsv(){
   if(!REGS.length){toast('신청자가 없어요');return;}
